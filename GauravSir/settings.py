@@ -26,11 +26,11 @@ SECRET_KEY = 'django-insecure-=00iy$bpe6=a4=pdd3r8m8nr8l-+i0mrxp@e=@l3k%%u082j2f
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+ALLOWED_HOSTS = ['https://naac-project.onrender.com','naac-project.onrender.com']
 
-ALLOWED_HOSTS = []
 
 
-# Application definition
+
 
 INSTALLED_APPS = [
     'website',
