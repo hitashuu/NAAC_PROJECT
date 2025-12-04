@@ -1,0 +1,150 @@
+
+{% extends 'website/layout.html' %}
+
+{% block body %}
+
+
+
+<div class="container-fluid">
+    <h2>Work Data</h2>
+    <form class="form-inline my-2 my-lg-0" style="float: right;" method="post" action="{% url 'work_display'%}">
+        {% csrf_token %}
+        <label for="form-control mr-sm-2" class="form-label mr-sm-2">Filter By - </label>
+        <select class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="field">
+            <option value="" selected disabled>Select a field</option>
+            
+            <option value="designation">Designation</option>
+            <option value="mode_of_recruitment">Mode of Recruitment</option>
+            <option value="dob_joining">Date Of Joining</option>
+            <option value="dob_retirement">Date Of Retirement</option>
+           
+            
+
+        </select>
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    {% comment %} <p>List of all the Awarded Candidates.</p>                                                                                       {% endcomment %}
+    <div class="table-responsive">    
+        {% if filter_field %}
+        {% if message %}
+            <p>No Records Available</p>
+            <a href="{% url 'work_display'%}">Back to all Records</a>
+        {% else %} 
+        <h4>Filtered</h4>  
+        <div style="padding:2%;float: right;">
+            <a class="btn btn-outline-success" href="{% url 'work_display'%}">Remove Filter</a>
+        </div>
+        <p>Showing filtered results for <b>{{filter_field}}</b> matching with <b>{{filter_data}}</b></p>          
+  
+        {% comment %} {% if current_user.employee_code == 'admin' %}
+                <form action="{% url 'award_download'%}">
+                    <button type="submit" name="filter_award" class="btn btn-outline-success">Download Csv</button>
+                </form>
+                {% endif %} {% endcomment %}
+
+
+                <table class="table table-hover" style="margin-top: 2%;">
+                    <thead>
+                        <tr>
+                            <tr>
+                                <th>Sr.No</th>
+                                {% if is_admin or is_head %}
+                                <th>Employee Name</th>
+                               
+                                {% endif %}
+                                
+                                <th>Designation</th>
+                                <th>Mode of Recruitment</th>
+                                
+                                <th>Date Of Joining</th>
+                                <th>Date Of Retirement</th>
+        
+                                        
+                            </tr>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for i,work in filter_work_list %}
+                            <tr>
+                                <td>{{i}}</td>
+                                {% if is_admin or is_head %}
+                                <td>{{ work.user.employee_name }}</td>
+                                {% endif %}
+                                
+                                <td>{{work.designation}}</td>
+                                <td>{{work.mode_of_recruitment}}</td>
+                                
+                                
+                                <td>{{work.dob_joining}}</td>
+                                <td>{{work.dob_retirement}}</td>
+                                
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                </table>
+
+                  {% if is_head or is_admin %}
+        <form action="{% url 'work_data_download'%}"> 
+            <button href="#" type="submit" name="filter_work" class="btn btn-outline-success">Download Csv</button>
+         </form>
+         {% endif %}
+        {% endif %}
+        {% else %}
+        
+        <table class="table table-hover" style="margin-top: 2%;">
+            <thead>
+                <tr>
+                    <tr>
+                        <th>Sr.No</th>
+                        {% if is_admin or is_head %}
+                        <th>Employee Name</th>
+                       
+                        {% endif %}
+                        
+                        <th>Designation</th>
+                        <th>Mode of Recruitment</th>
+                        
+                        <th>Date Of Joining</th>
+                        <th>Date Of Retirement</th>
+
+                                
+                    </tr>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for i,work in work_list %}
+                    <tr>
+                        <td>{{i}}</td>
+                        {% if is_admin or is_head %}
+                        <td>{{ work.user.employee_name }}</td>
+                        {% endif %}
+                        
+                        <td>{{work.designation}}</td>
+                        <td>{{work.mode_of_recruitment}}</td>
+                        
+                        
+                        <td>{{work.dob_joining}}</td>
+                        <td>{{work.dob_retirement}}</td>
+                        
+                    </tr>
+                {% endfor %}
+                </tbody>
+        </table>
+             {% if is_head or is_admin %}
+        <form action="{% url 'work_data_download'%}"> 
+            <button href="#" type="submit" name="work"  class="btn btn-outline-success">Download Csv</button>
+         </form> 
+        
+       
+
+
+         
+         {% endif %}
+
+            {% endif %}
+    
+    </div>
+</div>
+
+{% endblock%}

@@ -1,0 +1,219 @@
+{% extends 'website/layout.html' %}
+
+
+{% block body%}
+<style>
+    .form_div{
+            padding: 10px 10px;
+            box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+        }
+    
+</style>
+<script type="text/javascript">
+    function ShowHideDiv() {
+            var maritial_status = document.getElementById("maritial_status");
+            var spouse_name = document.getElementById("spouse_name");
+            spouse_name.style.display = maritial_status.value == "Married" ? "block" : "none";
+        }
+
+    function show_fill() {
+        var form_fill = document.getElementById("form_fill");
+        var form_show = document.getElementById("form_show");
+
+        form_fill.style.display = "block";
+        form_show.style.display = "None";
+    }
+    
+</script>
+
+
+    <!-- 
+        Fill the form
+    -->
+    <div class="form_div" id="form_fill" style="display: none;">
+
+        
+        <form action="{% url 'experience_details'%}" method="post">
+            {% csrf_token%}
+        <h1>Experience Details</h1>
+        <hr>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="details">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Teaching Experience(Undergraduate-in Yrs)</label>
+                        <input type="text" class="form-control" required name="undergraduate" placeholder="Enter your Undergraduate Experience" value="{{undergraduate}}">
+                    </div>
+
+                    
+
+                   
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Total Teaching Experience <strong style="color:red;">(Undergraduate + Postgraduate)</strong></label>
+                        <input type="text" class="form-control" required name="teaching_experience" placeholder="Enter your Teaching Experience" value="{{teaching_experience}}">
+                    </div> 
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Research Experience(in Yrs)</label>
+                        <input type="text" class="form-control" required name="research_experience" placeholder="Enter your Research Experience" value="{{research_experience}}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Specialization</label>
+                        <input type="text" class="form-control" required name="specialization" placeholder="Enter your specialization(s)" value="{{specialization}}">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="details">
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Teaching Experience(Postgraduate-in Yrs)</label>
+                        <input type="text" class="form-control" required name="postgraduate" placeholder="Enter your postrgraduate Experience" value="{{postgraduate}}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Teaching Experience at PUP(in Yrs)</label>
+                        <input type="text" class="form-control" required name="teaching_experience_pup" placeholder="Enter your Teaching Experience at PUP" value="{{pup_teaching_experience}}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Industry Experience(in Yrs)</label>
+                        <input type="text" class="form-control" required name="industry_experience" placeholder="Enter your Industry Experience" value="{{industry_experience}}">
+                    </div>
+                    
+                </div>
+            </div>    
+        </div>
+            <div class="submit_button"  style="margin-top: 3%;padding: 3%;">
+                <center><button type="submit" class="btn btn-primary">Submit</button></center>
+            </div>
+        </form>
+    </div>
+
+    {% if message%}
+    <div class="form_div">
+        <form action="{% url 'experience_details'%}" method="post">
+            {% csrf_token%}
+            <h1>Experience Details</h1>
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="details">
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Teaching Experience(Undergraduate-in Yrs)</label>
+                            <input type="text" class="form-control" required name="undergraduate" placeholder="Enter your Undergraduate Experience" >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1"> Total Teaching Experience <strong style="color:red;">(Undergraduate + Postgraduate)</strong></label>
+                            <input type="text" class="form-control" required name="teaching_experience" placeholder="Enter your Teaching Experience">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Research Experience(in Yrs)</label>
+                            <input type="text" class="form-control" required name="research_experience" placeholder="Enter your Research Experience">
+                        </div>
+    
+                       
+
+                        
+                       
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Specialization</label>
+                            <input type="text" class="form-control" required name="specialization" placeholder="Enter your specialization(s)">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="details">
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Teaching Experience(Postgraduate-in Yrs)</label>
+                            <input type="text" class="form-control" required name="postgraduate" placeholder="Enter your postrgraduate Experience" >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Teaching Experience at PUP(in Yrs)</label>
+                            <input type="text" class="form-control" required name="teaching_experience_pup" placeholder="Enter your Teaching Experience at PUP">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Industry Experience(in Yrs)</label>
+                            <input type="text" class="form-control" required name="industry_experience" placeholder="Enter your Industry Experience">
+                        </div>
+                       
+                    </div>
+                </div>    
+            </div>
+                <div class="submit_button"  style="margin-top: 3%;padding: 3%;">
+                    <center><button type="submit" class="btn btn-primary">Submit</button></center>
+                </div>
+            </form>
+        </div>
+    {% else %}
+    <div class="form_div" id="form_show">
+        <div style="display: flex;justify-content: space-between;">
+            <h1>Experience Details</h1>
+            <div class="button_class" style="padding: 1%;">
+                <button onclick="show_fill()" class="btn btn-primary">Edit</button>
+            </div>
+        </div>
+        <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="details">
+
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Teaching Experience(Undergraduate-in Yrs)</label>
+                            <input type="text" class="form-control" required name="undergraduate" placeholder="Enter your Undergraduate Experience" disabled value="{{undergraduate}}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1"> Total Teaching Experience <strong style="color:red;">(Undergraduate + Postgraduate)</strong> </label>
+                            <input type="text" class="form-control" required name="teaching_experience" placeholder="Enter your Teaching Experience" disabled value="{{teaching_experience}}">
+                        </div>
+    
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Research Experience(in Yrs)</label>
+                            <input type="text" class="form-control" required name="research_experience" placeholder="Enter your Research Experience" disabled value="{{research_experience}}">
+                        </div>
+
+                       
+                       
+                       
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Specialization</label>
+                            <input type="text" class="form-control" required name="specialization" placeholder="Enter your specialization(s)"disabled value="{{specialization}}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="details">
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Teaching Experience(Postgraduate-in Yrs)</label>
+                            <input type="text" class="form-control" required name="postgraduate" placeholder="Enter your postrgraduate Experience" disabled value="{{postgraduate}}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Teaching Experience at PUP(in Yrs)</label>
+                            <input type="text" class="form-control" required name="teaching_experience_pup" placeholder="Enter your Teaching Experience at PUP" disabled value="{{pup_teaching_experience}}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Industry Experience(in Yrs)</label>
+                            <input type="text" class="form-control" required name="industry_experience" placeholder="Enter your Industry Experience" disabled value="{{industry_experience}}">
+                        </div>
+                        
+                    </div>
+                </div>    
+            </div>
+    </div>
+    {% endif %}
+{% endblock %}

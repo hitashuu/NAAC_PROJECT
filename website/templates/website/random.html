@@ -1,0 +1,70 @@
+<form class="form-inline my-2 my-lg-0" style="float: right;" method="post" action="{% url 'phd_display'%}">
+    {% csrf_token %}
+    <label class="form-label mr-sm-2">Filter By - </label>
+    <select class="form-control mr-sm-2" name="field" id="field" onchange="Change()">
+        <option value="" selected disabled>Select a field</option>
+        <option value="scholor_name">Scholor Name</option>
+        <option value="department">Department</option>
+        <option value="thesis_title">Thesis Title</option>
+        <option value="registration_date">Registration Date</option>
+        <option value="thesis_awarded_date">Thesis award date</option>
+        <option value="enrollment_date">Enrollment date</option>
+        <option value="thesis_submission_date">Thesis submission date</option>
+        <option value="supervisor_name">Supervisor name</option>
+        <option value="co_supervisor_name">Co Supervisor name</option>
+        <option value="faculty_title">Faculty title</option>
+    </select>
+    <input class="form-control mr-sm-2" type="search" placeholder="Search" name="q" id="data">
+    <button class="btn btn-outline-success" type="submit">Search</button>
+</form>
+
+
+
+<thead>
+    <tr>
+        <th>Sr.No</th>
+        {% if is_admin or is_head %}
+            <th>Registered BY</th>
+        {% endif %}
+        <th>Scholor Name</th>
+        <th>Department</th>
+        <th>Thesis Title</th>
+        <th>Registration Date</th>
+        <th>Thesis award date</th>
+        <th>Enrollment date</th>
+        <th>Thesis submission date</th>
+        <th>Supervisor name</th>
+        <th>Co Supervisor name</th>
+        <th>Faculty title</th>
+        {% if not is_admin or is_head %}
+            <th>Edit / Delete</th>
+        {% endif %}
+    </tr>
+</thead>
+
+
+{% for i, phd in filter_phds_list|default:phds_list %}
+                    <tr>
+                        <td>{{ i }}</td>
+                        {% if is_admin or is_head %}
+                            <td>{{ phd.user.employee_name }}</td>
+                        {% endif %}
+                        <td>{{ phd.scholor_name }}</td>
+                        <td>{{ phd.department }}</td>
+                        <td>{{ phd.thesis_title }}</td>
+                        <td>{{ phd.registration_date }}</td>
+                        <td>{{ phd.thesis_awarded_date }}</td>
+                        <td>{{ phd.enrollment_date }}</td>
+                        <td>{{ phd.thesis_submission_date }}</td>
+                        <td>{{ phd.supervisor_name }}</td>
+                        <td>{{ phd.co_supervisor_name }}</td>
+                        <td>{{ phd.faculty_title }}</td>
+
+                        {% if not is_admin or is_head %}
+                        <td>
+                            <a href="{% url 'edit_phd' phd.id %}">Edit</a> /
+                            <a href="{% url 'delete_phd' phd.id %}" onclick="DeleteAlert()">Delete</a>
+                        </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}

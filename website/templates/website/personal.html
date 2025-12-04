@@ -1,0 +1,265 @@
+{% extends 'website/layout.html' %}
+
+
+{% block body%}
+<style>
+    .form_div{
+            padding: 10px 10px;
+            box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+        }
+    
+</style>
+<script type="text/javascript">
+    function ShowHideDiv() {
+            var maritial_status = document.getElementById("maritial_status");
+            var spouse_name = document.getElementById("spouse_name");
+            spouse_name.style.display = maritial_status.value == "Married" ? "block" : "none";
+        }
+
+    function ShowHideDiv_Hidden() {
+            var maritial_status = document.getElementById("maritial_status_hidden");
+            var spouse_name = document.getElementById("spouse_name_hidden");
+            spouse_name.style.display = maritial_status.value == "Married" ? "block" : "none";
+        }
+
+        
+
+    function show_fill() {
+        var form_fill = document.getElementById("form_fill");
+        var form_show = document.getElementById("form_show");
+
+        form_fill.style.display = "block";
+        form_show.style.display = "None";
+    }
+    
+</script>
+
+
+
+        {% comment %} Fill this form {% endcomment %}
+    
+     <div class="form_fill" id="form_fill" style="display: none;">
+    <form action="{% url 'personal_details' %}" method="post">
+            {% csrf_token %}
+    <div class="form_div">
+        
+        <h1>Personal Details</h1>
+        <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="details">
+                        
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Father's Name</label>
+                            <input type="text" class="form-control" placeholder="Enter Father's Name" required name="father_name" value="{{father_name}}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Date Of Birth</label>
+                            <input type="date" class="form-control" placeholder="Enter your D.O.B" required name="dateofbirth" value="{{date_of_birth}}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Gender</label>
+                            <select type="text" class="form-control" required name="gender" value="{{gender}}">
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Do Not Prefer">Do Not Prefer</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group" style="display: none;" id="spouse_name_hidden">
+                            <label for="exampleInputEmail1">Spouse Name</label>
+                            <input type="text" class="form-control" placeholder="Enter Spouse Name"  name="spouse_name" value="{{spouse_name}}">
+                        </div>
+                           
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="details">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Mother's Name</label>
+                            <input type="text" class="form-control" placeholder="Enter Mother's Name" name="mother_name" value="{{mother_name}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Blood Group</label>
+                            <select type="text" class="form-control" name="blood_group" required value="blood_group">
+                                <option value="O+">O+</option>
+                                <option value="A+">A+</option>
+                                <option value="A-">A-</option>
+                                <option value="B+">B+</option>
+                                <option value="B-">B-</option>
+                                <option value="AB+">AB+</option>
+                                <option value="AB-">AB-</option>
+                                <option value="O-">O-</option>
+                            </select>
+                        </div> 
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Maritial Status</label>
+                            <select type="text" class="form-control" id="maritial_status_hidden" onchange = "ShowHideDiv_Hidden()" name="maritial_status" required value="maritial_status">
+                                <option value="Single">Single</option>
+                                <option value="Married">Married</option>
+                                <option value="Divorced">Divorced</option>
+                                <option value="Separated">Separated or Widowed</option>
+                            </select>
+                        </div> 
+                        
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">GPF/NPS no.</label>
+                            <input type="text" class="form-control" placeholder="Enter GPS/NPS no" required name="gpf_ornps"value="{{gpf_ornps}}" >
+                        </div>
+                    </div>
+                </div>    
+            </div>
+            
+            <div class="submit_button"  style="margin-top: 3%;padding: 3%;">
+                <center><button type="submit" class="btn btn-primary">Submit</button></center>
+            </div>
+        </div>
+    </form>
+    </div>
+
+    <!--
+        Form Show Details Only
+    -->
+    {% if message %}
+    <div class="form_fill" >
+        <form action="{% url 'personal_details' %}" method="post">
+                {% csrf_token %}
+        <div class="form_div">
+            
+            <h1>Personal Details</h1>
+         
+            <hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="details">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Father's Name</label>
+                                <input type="text" class="form-control" placeholder="Enter Father's Name" required name="father_name">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Date Of Birth</label>
+                                <input type="date" class="form-control" placeholder="Enter your D.O.B" required name="dateofbirth">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Gender</label>
+                                <select type="text" class="form-control" required name="gender">
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Do Not Prefer">Do Not Prefer</option>
+                                </select>
+                            </div>
+                            <div class="form-group" style="display: none;" id="spouse_name">
+                                <label for="exampleInputEmail1">Spouse Name</label>
+                                <input type="text" class="form-control" placeholder="Enter Spouse Name"  name="spouse_name">
+                            </div>
+                               
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="details">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Mother's Name</label>
+                                <input type="text" class="form-control" placeholder="Enter Mother's Name" name="mother_name">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Blood Group</label>
+                                <select type="text" class="form-control" name="blood_group" required>
+                                    <option value="O+">O+</option>
+                                    <option value="A+">A+</option>
+                                    <option value="A-">A-</option>
+                                    <option value="B+">B+</option>
+                                    <option value="B-">B-</option>
+                                    <option value="AB+">AB+</option>
+                                    <option value="AB-">AB-</option>
+                                    <option value="O-">O-</option>
+                                </select>
+                            </div> 
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Maritial Status</label>
+                                <select type="text" class="form-control" id="maritial_status" onchange = "ShowHideDiv()" name="maritial_status" required>
+                                    <option value="Single">Single</option>
+                                    <option value="Married">Married</option>
+                                    <option value="Divorced">Divorced</option>
+                                    <option value="Separated">Separated or Widowed</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">GPF/NPS no.</label>
+                                <input type="text" class="form-control" placeholder="Enter GPS/NPS no" required name="gpf_ornps" >
+                            </div>
+                        </div>
+                    </div>    
+                </div>
+                <div class="submit_button"  style="margin-top: 3%;padding: 3%;">
+                    <center><button type="submit" class="btn btn-primary">Submit</button></center>
+                </div>
+            </div>
+        </form>
+        </div>
+    {% else %}
+    <div class="form_show" id="form_show">
+        <div class="form_div">
+            <div style="display: flex;justify-content: space-between;">
+                <h1>Personal Details</h1>
+                <div class="button_class" style="padding: 1%;">
+                    <button onclick="show_fill()" class="btn btn-primary">Edit</button>
+                </div>
+            </div>
+            <hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="details">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Father's Name</label>
+                                <input type="text" class="form-control" placeholder="Enter Father's Name" required name="father_name" disabled value="{{father_name}}">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Date Of Birth</label>
+                                <input type="text" class="form-control" placeholder="Enter your D.O.B" required name="dateofbirth" disabled value="{{date_of_birth}}">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Gender</label>
+                                <input type="text" class="form-control" required name="gender" disabled value="{{gender}}"> 
+                            </div>
+                            {% if spouse_name %}
+                            <div class="form-group" id="spouse_name" >
+                                <label for="exampleInputEmail1">Spouse Name</label>
+                                <input type="text" class="form-control" placeholder="Enter Spouse Name"  name="spouse_name" disabled value="{{spouse_name}}">
+                            </div>
+                            {% endif %}
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="details">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Mother's Name</label>
+                                <input type="text" class="form-control" placeholder="Enter Mother's Name" name="mother_name" disabled value="{{mother_name}}">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Blood Group</label>
+                                <input type="text" class="form-control" name="blood_group" required disabled value="{{blood_group}}" >
+                            </div> 
+
+                            
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Maritial Status</label>
+                                <input type="text" class="form-control" name="maritial_status" required value="{{maritial_status}}" disabled>
+                            </div> 
+                            
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">GPF/NPS no.</label>
+                                <input type="text" class="form-control" name="gpf_ornps" required value="{{gpf_ornps}}" disabled>
+                            </div>
+                        </div>
+                    </div>    
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+
+{% endblock %}

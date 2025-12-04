@@ -1,0 +1,154 @@
+{% extends 'website/layout.html' %}
+
+
+{% block body%}
+<style>
+    .form_div{
+            padding: 10px 10px;
+            box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+        }
+    
+</style>
+<script type="text/javascript">
+    function ShowHideDiv() {
+            var maritial_status = document.getElementById("maritial_status");
+            var spouse_name = document.getElementById("spouse_name");
+            spouse_name.style.display = maritial_status.value == "Married" ? "block" : "none";
+        }
+
+    function show_fill() {
+        var form_fill = document.getElementById("form_fill");
+        var form_show = document.getElementById("form_show");
+
+        form_fill.style.display = "block";
+        form_show.style.display = "None";
+    }
+    
+</script>
+
+
+
+    <!-- 
+        Fill the form
+    -->
+    <div class="form_div" id="form_fill" style="display: none;">
+
+        
+        <form action="{% url 'bank_details'%}" method="post">
+            {% csrf_token%}
+            <h1> hi here me</h1>
+        <h1>Bank Details</h1>
+        <hr>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="details">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Bank Name</label>
+                        <input type="text" class="form-control" required name="bank_name" placeholder="Enter Bank Name" value="{{bank_name}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Bank Account No.</label>
+                        <input type="text" class="form-control" required name="bank_account" placeholder="Enter Bank Account" value="{{bank_account}}">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="details">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Bank IFSC Code</label>
+                        <input type="text" class="form-control" required name="ifsc_code" placeholder="Enter IFSC Code" value="{{bank_ifsc}}">
+                    </div>
+                </div>
+                <div class="details">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Bank Branch</label>
+                        <input type="text" class="form-control" required name="bank_branch" placeholder="Enter Bank Branch" value="{{bank_branch}}">
+                    </div>
+                </div>
+            </div>    
+        </div>
+            <div class="submit_button"  style="margin-top: 3%;padding: 3%;">
+                <center><button type="submit" class="btn btn-primary">Submit</button></center>
+            </div>
+        </form>
+    </div>
+
+    {% if message%}
+    <div class="form_div">
+        <form action="{% url 'bank_details'%}" method="post">
+            {% csrf_token%}
+            <h1>Bank Details</h1>
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="details">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Bank Name</label>
+                            <input type="text" class="form-control" required name="bank_name" placeholder="Enter Bank Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Bank Account No.</label>
+                            <input type="text" class="form-control" required name="bank_account" placeholder="Enter Bank Account">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="details">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Bank IFSC Code</label>
+                            <input type="text" class="form-control" required name="ifsc_code" placeholder="Enter IFSC Code">
+                        </div>
+                    </div>
+                    <div class="details">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Bank Branch</label>
+                            <input type="text" class="form-control" required name="bank_branch" placeholder="Enter Bank Branch">
+                        </div>
+                    </div>
+                </div>    
+            </div>
+                <div class="submit_button"  style="margin-top: 3%;padding: 3%;">
+                    <center><button type="submit" class="btn btn-primary">Submit</button></center>
+                </div>
+            </form>
+        </div>
+    {% else %}
+    <div class="form_div" id="form_show">
+        <div style="display: flex;justify-content: space-between;">
+            <h1>Bank Details</h1>
+            <div class="button_class" style="padding: 1%;">
+                <button onclick="show_fill()" class="btn btn-primary">Edit</button>
+            </div>
+        </div>
+        <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="details">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Bank Name</label>
+                            <input type="text" class="form-control" required name="bank_name" placeholder="Enter Bank Name" disabled value="{{bank_name}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Bank Account No.</label>
+                            <input type="text" class="form-control" required name="bank_account" placeholder="Enter Bank Account" disabled value="{{bank_account}}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="details">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Bank IFSC Code</label>
+                            <input type="text" class="form-control" required name="ifsc_code" placeholder="Enter IFSC Code" disabled value="{{bank_ifsc}}">
+                        </div>
+                    </div>
+                    <div class="details">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Bank Branch </label>
+                            <input type="text" class="form-control" required name="bank_branch" placeholder="Enter Branch Name" disabled value="{{bank_branch}}">
+                        </div>
+                    </div>
+                </div>    
+            </div>
+    </div>
+    {% endif %}
+{% endblock %}

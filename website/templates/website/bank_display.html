@@ -1,0 +1,143 @@
+
+{% extends 'website/layout.html' %}
+
+{% block body %}
+
+
+
+<div class="container-fluid">
+    <h2>Bank Data</h2>
+    <form class="form-inline my-2 my-lg-0" style="float: right;" method="post" action="{% url 'bank_display'%}">
+        {% csrf_token %}
+        <label for="form-control mr-sm-2" class="form-label mr-sm-2">Filter By - </label>
+        <select class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="field">
+            <option value="" selected disabled>Select a field</option>
+            
+            <option value="bank_name">Bank Name</option>
+            <option value="bank_ifsc">Bank IFSC Code</option>
+            <option value="bank_account">Bank Account No.</option>
+            <option value="bank_branch">Bank Branch</option>
+           
+            
+           
+            
+
+        </select>
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    {% comment %} <p>List of all the Awarded Candidates.</p>                                                                                       {% endcomment %}
+    <div class="table-responsive">    
+        {% if filter_field %}
+        {% if message %}
+            <p>No Records Available</p>
+            <a href="{% url 'bank_display'%}">Back to all Records</a>
+        {% else %} 
+        <h4>Filtered</h4>  
+        <div style="padding:2%;float: right;">
+            <a class="btn btn-outline-success" href="{% url 'bank_display'%}">Remove Filter</a>
+        </div>
+        <p>Showing filtered results for <b>{{filter_field}}</b> matching with <b>{{filter_data}}</b></p>     
+        
+        <table class="table table-hover" style="margin-top: 2%;">
+            <thead>
+                
+                    <tr>
+                        <th>Sr.No</th>
+
+                        {% if is_admin or is_head %}
+                        <th>Employee name</th>
+                        {% endif %}
+                        
+                        
+                        <th>Bank Name</th>
+                        <th>Bank IFSC Code</th>
+                        <th>Bank Account No.</th>
+                        <th>Bank Branch</th>
+                                
+                    </tr>
+                
+                </thead>
+                <tbody>
+                    {% for i,bank  in  filter_bank_list%}
+                    <tr>
+                        <td>{{i}}</td>
+
+                        {% if is_admin or is_head %}
+                        <td>{{ bank.user.employee_name }}</td>
+                        {% endif %}
+                        
+                        
+                        <td>{{bank.bank_name}}</td>
+                        <td>{{bank.bank_ifsc}}</td>
+                        <td>{{bank.bank_account}}</td>
+                        <td>{{bank.bank_branch}}</td>
+                        
+                        
+                    </tr>
+                {% endfor %}
+                </tbody>
+        </table>
+
+
+          {% if is_head or is_admin %}
+        <form action="{% url 'bank_data_download'%}"> 
+            <button href="#" type="submit" name="filter_bank" class="btn btn-outline-success">Download Csv</button>
+         </form>
+         {% endif %}
+    
+            
+        
+        {% endif %}
+       {% else %}
+        
+        <table class="table table-hover" style="margin-top: 2%;">
+            <thead>
+                
+                    <tr>
+                        <th>Sr.No</th>
+
+                        {% if is_admin or is_head %}
+                        <th>Employee name</th>
+                        {% endif %}
+                        
+                        
+                        <th>Bank Name</th>
+                        <th>Bank IFSC Code</th>
+                        <th>Bank Account No.</th>
+                        <th>Bank Branch</th>
+                                
+                    </tr>
+                
+                </thead>
+                <tbody>
+                    {% for i,bank  in  bank_list%}
+                    <tr>
+                        <td>{{i}}</td>
+
+                        {% if is_admin or is_head %}
+                        <td>{{ bank.user.employee_name }}</td>
+                        {% endif %}
+                        
+                        
+                        <td>{{bank.bank_name}}</td>
+                        <td>{{bank.bank_ifsc}}</td>
+                        <td>{{bank.bank_account}}</td>
+                        <td>{{bank.bank_branch}}</td>
+                        
+                        
+                    </tr>
+                {% endfor %}
+                </tbody>
+        </table>
+            {% if is_head or is_admin %}
+        <form action="{% url 'bank_data_download'%}"> 
+            <button href="#" type="submit" name="bank" class="btn btn-outline-success">Download Csv</button>
+         </form>
+         {% endif %}
+           
+            {% endif %}
+    </div>
+</div>
+
+{% endblock%}

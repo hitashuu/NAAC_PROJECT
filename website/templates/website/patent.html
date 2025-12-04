@@ -1,0 +1,227 @@
+{% extends 'website/layout.html' %}
+
+
+{% block body %}
+<style>
+    .form_div{
+            padding: 10px 10px;
+            box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+        }
+    
+</style>
+
+<script>
+
+    function showDate()
+    {
+        var category=document.getElementById("category").value;
+        var date_published=document.getElementById("date_published");
+        var date_award=document.getElementById("date_award");
+
+        if(category=="Published")
+        {
+            date_published.style.display="block";
+            date_award.style.display="none";
+        }
+
+        else if(category=="Awarded/Granted")
+        {
+            
+            date_award.style.display="block";
+            date_published.style.display="none";
+        }
+
+    }
+
+    window.onload = function () {
+        showDate();
+    };
+</script>
+
+    <div class="form_div">
+        {% if edit_patent %}
+        <form action="{% url 'edit_patent' edit_patent.id %}" method="post">
+            {% csrf_token%}
+        <h1> Edit Patent Published/Awarded {{edit_patent.patent_number}}</h1>
+        <hr>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="details">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Name of the Author(s)</label>
+                        <input type="text" class="form-control" required name="author_name" placeholder="Enter the Name of the Author(s)" value="{{edit_patent.author_name}}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Title of the Patent</label>
+                        <textarea type="text" class="form-control" required name="patent_title" placeholder="Enter the Title of the Patent" rows="4">{{edit_patent.patent_title}}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Patent Number</label>
+                        <input type="text" class="form-control" required name="patent_number" placeholder="Enter the registered patent number" value="{{edit_patent.patent_number}}">
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Patent type</label>
+                        <select name="patent_type" id="" class="form-control">
+                            <option value="">--Select Level--</option>
+                            <option value="Design">Design</option>
+                            <option value="Utility">Utility</option>
+                            <option value="Plant">Plant</option>
+                        </select>
+                        {{edit_patent.patent_type}}
+
+                    </div>
+
+                   
+
+                   
+                    
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="details">
+                    
+                    <div class="form-group" style="margin-top: 30px;">
+                        <label for="exampleInputEmail1">Date of Patent</label>
+                        <input type="date" class="form-control" required name="year_awarded" placeholder="Enter the registered patent number">
+                        {{edit_patent.patent_year}}
+                    </div>
+
+                    {% comment %} <div class="form-group"> {% endcomment %}
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Level</label>
+                            <select name="level" id="" class="form-control">
+                                <option value="National">National</option>
+                                <option value="International">International</option>
+                            </select>
+                            {{edit_patient.level}}
+                        </div>
+                        
+                        
+                        
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Category</label>
+                        <select name="category" id="category" class="form-control" onchange="showDate()"> 
+                            <option value="Published">Published</option>
+                            <option value="Awarded/Granted">Awarded/Granted</option>
+                        </select>
+                        {{edit_patent.category}} 
+                    </div>
+
+                     
+                    
+
+                    <div class="form-group" style="margin-top: 30px;display:none" id="date_published">
+                        <label for="exampleInputEmail1">Date of Published</label>
+                        <input type="date" class="form-control"  name="date_published" >
+                    </div>
+
+                    <div class="form-group" style="margin-top: 30px;display:none" id="date_award">
+                        <label for="exampleInputEmail1">Date of Award/Grant</label>
+                        <input type="date" class="form-control" name="date_award" >
+                    </div>
+
+
+
+
+                </div>
+            </div>    
+        </div>
+            <div class="submit_button"  style="margin-top: 3%;padding: 3%;">
+                <center><button type="submit" class="btn btn-primary">Submit</button></center>
+            </div>
+        </form>
+        
+        {% else %}
+        
+        <form action="{% url 'patent_register'%}" method="post">
+            {% csrf_token%}
+        <h1>Patent Published/Awarded</h1>
+        <hr>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="details">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Name of the Author(s)</label>
+                        <input type="text" class="form-control" required name="author_name" placeholder="Enter the Name of the Author(s)">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Title of the Patent</label>
+                        <textarea type="text" class="form-control" required name="patent_title" placeholder="Enter the Title of the Patent" rows="4"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Patent Number</label>
+                        <input type="text" class="form-control" required name="patent_number" placeholder="Enter the registered patent number">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Patent type</label>
+                        <select name="patent_type" id="" class="form-control">
+                            <option value="">--Select Level--</option>
+                            <option value="Design">Design</option>
+                            <option value="Utility">Utility</option>
+                            <option value="Plant">Plant</option>
+                        </select>
+                    </div>
+
+
+
+                    
+                   
+
+                   
+                    
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="details">
+                    
+                    <div class="form-group" style="margin-top: 2px;">
+                        <label for="exampleInputEmail1">Date of Patent</label>
+                        <input type="date" class="form-control" required name="year_awarded" placeholder="Enter the registered patent number">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Level</label>
+                        <select name="level" id="" class="form-control">
+                            <option value="">--Select Level--</option>
+                            <option value="National">National</option>
+                            <option value="International">International</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Category</label>
+                        <select name="category" id="category" class="form-control" onchange="showDate()">
+                            <option value="">--Select Category--</option>
+                            <option value="Published">Published</option>
+                            <option value="Awarded/Granted">Awarded/Granted</option>
+                        </select>
+                    </div>
+
+                   
+                    <div class="form-group" style="margin-top: 30px; display:none" id="date_published" >
+                        <label for="exampleInputEmail1" >Date of Published</label>
+                        <input type="date" class="form-control"  name="date_published" >
+                    </div>
+
+                    <div class="form-group" style="margin-top: 30px; display:none" id="date_award">
+                        <label for="exampleInputEmail1">Date of Award/Grant</label>
+                        <input type="date" class="form-control"  name="date_award" >
+                    </div>
+                </div>
+            </div>    
+        </div>
+            <div class="submit_button"  style="margin-top: 3%;padding: 3%;">
+                <center><button type="submit" class="btn btn-primary">Submit</button></center>
+            </div>
+        </form>
+        {% endif %}
+    </div>
+
+{% endblock %}

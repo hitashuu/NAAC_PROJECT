@@ -1,0 +1,183 @@
+
+{% extends 'website/layout.html' %}
+
+{% block body %}
+
+
+
+<div class="container-fluid">
+    <h2>Contact Data</h2>
+    <form class="form-inline my-2 my-lg-0" style="float: right;" method="post" action="{% url 'contact_display'%}">
+        {% csrf_token %}
+        <label for="form-control mr-sm-2" class="form-label mr-sm-2">Filter By - </label>
+        <select class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="field">
+            <option value="" selected disabled>Select a field</option>
+            
+            <option value="aadhar">Aadhar Number</option>
+            <option value="pan_number">PAN Number</option>
+            <option value="state">State</option>
+            <option value="district">District</option>
+            <option value="pin">Pincode</option>
+            <option value="mobile">Mobile Number</option>
+            <option value="mobile_alt">Mobile Number(Alternate)</option>
+            <option value="personal_email">Personal Email</option>
+            <option value="official_email">Corressponding Address</option>
+            <option value="corresponding_address">Official Email</option>
+            <option value="permanent_address">Permanent Address</option>
+            
+           
+            
+
+        </select>
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    {% comment %} <p>List of all the Awarded Candidates.</p>                                                                                       {% endcomment %}
+    <div class="table-responsive">    
+        {% if filter_field %}
+        {% if message %}
+            <p>No Records Available</p>
+            <a href="{% url 'contact_display'%}">Back to all Records</a>
+        {% else %} 
+        <h4>Filtered</h4>  
+        <div style="padding:2%;float: right;">
+            <a class="btn btn-outline-success" href="{% url 'contact_display'%}">Remove Filter</a>
+        </div>
+        <p>Showing filtered results for <b>{{filter_field}}</b> matching with <b>{{filter_data}}</b></p>          
+    
+       
+        {% comment %} {% if current_user.employee_code == 'admin' %}
+                <form action="{% url 'award_download'%}">
+                    <button type="submit" name="filter_award" class="btn btn-outline-success">Download Csv</button>
+                </form>
+                {% endif %} {% endcomment %}
+
+                <table class="table table-hover" style="margin-top: 2%;">
+                    <thead>
+                        
+                            <tr>
+                                <th>Sr.No</th>
+        
+                                {% if is_admin or is_head %}
+                                <th>Employee name</th>
+                                {% endif %}
+                                
+                               
+                                        <th>Aadhar Number</th>
+                                        <th>PAN Number</th>
+                                        <th>State</th>
+                                        <th>District</th>
+                                        <th>Pincode</th>
+                                        <th>Mobile Number</th>
+                                        <th>Mobile Number(Alternate)</th>
+                                        <th>Personal Email</th>
+                                        <th>Official Email</th>
+                                        <th>Corressponding Address</th>
+                                        
+                                        <th>Permanent Address</th>
+                                        
+                                        <th>Employee Name</th>
+                            </tr>
+                        
+                        </thead>
+                        <tbody>
+                            {% for i,contact in filter_contact_list %}
+                            <tr>
+                                <td>{{i}}</td>
+        
+                                {% if is_admin or is_head %}
+                                <td>{{ contact.user.employee_name }}</td>
+                                {% endif %}
+                                
+                                <td>{{contact.aadhar}}</td>
+                                <td>{{contact.pan_number}}</td>
+                                <td>{{contact.state}}</td>
+                                <td>{{contact.district}}</td>
+                                <td>{{contact.pin}}</td>
+                                <td>{{contact.mobile}}</td>
+                                <td>{{contact.mobile_alt}}</td>
+                                <td>{{contact.personal_email}}</td>
+                                <td>{{contact.official_email}}</td>
+                                <td>{{contact.corresponding_address}}</td>
+                                <td>{{contact.permanent_address}}</td>
+                                
+                                
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                </table>
+
+                  {% if is_head or is_admin %}
+        <form action="{% url 'contact_data_download'%}"> 
+            <button href="#" type="submit" name="filter_contact" class="btn btn-outline-success">Download Csv</button>
+         </form>
+         {% endif %}
+    
+        {% endif %}
+       {% else %}
+    
+        <table class="table table-hover" style="margin-top: 2%;">
+            <thead>
+                
+                    <tr>
+                        <th>Sr.No</th>
+
+                        {% if is_admin or is_head %}
+                        <th>Employee name</th>
+                        {% endif %}
+                        
+                       
+                                <th>Aadhar Number</th>
+                                <th>PAN Number</th>
+                                <th>State</th>
+                                <th>District</th>
+                                <th>Pincode</th>
+                                <th>Mobile Number</th>
+                                <th>Mobile Number(Alternate)</th>
+                                <th>Personal Email</th>
+                                <th>Official Email</th>
+                                <th>Corressponding Address</th>
+                                
+                                <th>Permanent Address</th>
+                                
+                                <th>Employee Name</th>
+                    </tr>
+                
+                </thead>
+                <tbody>
+                    {% for i,contact in contact_list %}
+                    <tr>
+                        <td>{{i}}</td>
+
+                        {% if is_admin or is_head %}
+                        <td>{{ contact.user.employee_name }}</td>
+                        {% endif %}
+                        
+                        <td>{{contact.aadhar}}</td>
+                        <td>{{contact.pan_number}}</td>
+                        <td>{{contact.state}}</td>
+                        <td>{{contact.district}}</td>
+                        <td>{{contact.pin}}</td>
+                        <td>{{contact.mobile}}</td>
+                        <td>{{contact.mobile_alt}}</td>
+                        <td>{{contact.personal_email}}</td>
+                        <td>{{contact.official_email}}</td>
+                        <td>{{contact.corresponding_address}}</td>
+                        <td>{{contact.permanent_address}}</td>
+                        
+                        
+                    </tr>
+                {% endfor %}
+                </tbody>
+        </table>
+            
+                  {% if is_head or is_admin %}
+        <form action="{% url 'contact_data_download'%}"> 
+            <button href="#" type="submit" name="contact" class="btn btn-outline-success">Download Csv</button>
+         </form>
+            {% endif %}
+              {% endif %}
+    </div>
+</div>
+
+{% endblock%}

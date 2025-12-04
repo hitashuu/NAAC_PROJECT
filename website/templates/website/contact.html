@@ -1,0 +1,255 @@
+{% extends 'website/layout.html' %}
+
+
+{% block body%}
+<style>
+    .form_div{
+            padding: 10px 10px;
+            box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+        }
+    
+</style>
+<script type="text/javascript">
+    function ShowHideDiv() {
+            var maritial_status = document.getElementById("maritial_status");
+            var spouse_name = document.getElementById("spouse_name");
+            spouse_name.style.display = maritial_status.value == "Married" ? "block" : "none";
+        }
+
+    function show_fill() {
+        var form_fill = document.getElementById("form_fill");
+        var form_show = document.getElementById("form_show");
+
+        form_fill.style.display = "block";
+        form_show.style.display = "None";
+    }
+    
+</script>
+
+
+
+    <!-- 
+
+
+        Fill the form
+    -->
+        
+    <div class="form_div" id="form_fill" style="display: none;">
+
+        
+        
+        <form action="{% url 'contact_details'%}" method="post">
+            {% csrf_token%}
+        <h1>Contact Details</h1>
+        <hr>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="details">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Aadhar Number</label>
+                        <input type="text" class="form-control" required placeholder="Enter your 12-digit Aadhar Number" name="aadhar" value="{{user.aadhar_number}}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">State</label>
+                        <input type="text" class="form-control" required placeholder="Enter your State" name="state" value="{{state}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Pincode</label>
+                        <input type="text" class="form-control" required placeholder="Enter your Pincode" name="pincode" value="{{pincode}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Mobile Number(Alternate)</label>
+                        <input type="text" class="form-control" required placeholder="Enter mobile no" name="mobile_alternate" value="{{mobile_alt}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Corresponding Address</label>
+                        <textarea type="text" class="form-control" required placeholder="Enter Corresponding Address" name="corresponding_address">{{corresponding_address}}</textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="details">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">PAN Number</label>
+                        <input type="text" class="form-control" required name="pan_number" placeholder="Enter your 10-digit PAN Number" value="{{pan_number}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">District</label>
+                        <input type="text" class="form-control" required name="district" placeholder="Enter District" value="{{district}}">
+                    </div>  
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Mobile Number</label>
+                        <input type="text" class="form-control" required name="mobile" placeholder="Enter Mobile Number" value="{{mobile}}">
+                    </div>
+                    {% comment %} <div class="form-group">
+                        <label for="exampleInputEmail1">Landline</label>
+                        <input type="text" class="form-control" required name="landline" placeholder="Enter Landline" value="{{landline}}">
+                    </div> {% endcomment %}
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Personal Email</label>
+                        <input type="email" class="form-control" required name="personal_email" placeholder="Enter Personal Email" value="{{personal_email}}">
+                    </div> 
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Official Email</label>
+                        <input type="email" class="form-control" required name="official_email" placeholder="Enter Official Email" value="{{official_email}}">
+                    </div> 
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Permanent Address</label>
+                        <textarea type="text" class="form-control" required placeholder="Enter permanent address" name="permanent_address">{{permanent_address}}</textarea>
+                    </div>
+                </div>
+            </div> 
+        </div>
+            <div class="submit_button"  style="margin-top: 1%;padding: 1%;">
+                <center><button type="submit" class="btn btn-primary">Submit</button></center>
+            </div>   
+        </form>
+    </div>
+    
+    {% if message%}
+    <div class="form_div">
+            <form action="{% url 'contact_details'%}" method="post">
+                {% csrf_token%}
+            <h1>Contact Details</h1>
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="details">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Aadhar Number</label>
+                            <input type="text" class="form-control" required placeholder="Enter your 12-digit Aadhar Number" name="aadhar" value="{{user.aadhar_number}}" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">State</label>
+                            <input type="text" class="form-control" required placeholder="Enter your State" name="state">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Pincode</label>
+                            <input type="text" class="form-control" required placeholder="Enter your Pincode" name="pincode">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Mobile Number(Alternate)</label>
+                            <input type="text" class="form-control" required placeholder="Enter email" name="mobile_alternate">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Corresponding Address</label>
+                            <textarea type="text" class="form-control" required placeholder="Enter Corresponding Address" name="corresponding_address"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="details">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">PAN Number</label>
+                            <input type="text" class="form-control" required name="pan_number" placeholder="Enter your 10-digit PAN Number">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">District</label>
+                            <input type="text" class="form-control" required name="district" placeholder="Enter District">
+                        </div>  
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Mobile Number</label>
+                            <input type="number" class="form-control" required name="mobile" placeholder="Enter Mobile Number">
+                        </div>
+                        {% comment %} <div class="form-group">
+                            <label for="exampleInputEmail1">Landline</label>
+                            <input type="number" class="form-control" required name="landline" placeholder="Enter Landline">
+                        </div> {% endcomment %}
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Personal Email</label>
+                            <input type="email" class="form-control" required name="personal_email" placeholder="Enter Personal Email">
+                        </div> 
+    
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Official Email</label>
+                            <input type="email" class="form-control" required name="official_email" placeholder="Enter Official Email">
+                        </div> 
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Permanent Address</label>
+                            <textarea type="text" class="form-control" required placeholder="Enter Permanent address" name="permanent_address"></textarea>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+                <div class="submit_button"  style="margin-top: 1%;padding: 1%;">
+                    <center><button type="submit" class="btn btn-primary">Submit</button></center>
+                </div>   
+            </form>
+    </div>
+    {% else %}
+    <div class="form_div" id="form_show">
+            <div style="display: flex;justify-content: space-between;">
+                <h1>Contact Details</h1>
+                <div class="button_class" style="padding: 1%;">
+                    <button onclick="show_fill()" class="btn btn-primary">Edit</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="details">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Aadhar Number</label>
+                            <input type="text" class="form-control" required placeholder="Enter your 12-digit Aadhar Number" name="aadhar" readonly value="{{user.aadhar_number}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">State</label>
+                            <input type="text" class="form-control" required placeholder="Enter your State" name="state" disabled value="{{state}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Pincode</label>
+                            <input type="text" class="form-control" required placeholder="Enter your Pincode" name="pincode" disabled value="{{pincode}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Mobile Number(Alternate)</label>
+                            <input type="text" class="form-control" required placeholder="Enter mobile no" name="mobile_alternate" disabled value="{{mobile_alt}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Corressponding Address</label>
+                            <textarea type="text" class="form-control" required placeholder="Enter corresponding" name="corresponding_address" disabled>"{{corresponding_address}}"</textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="details">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">PAN Number</label>
+                            <input type="text" class="form-control" required name="pan_number" placeholder="Enter your 10-digit PAN Number" disabled value="{{pan_number}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">District</label>
+                            <input type="text" class="form-control" required name="district" placeholder="Enter District" disabled value="{{district}}">
+                        </div>  
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Mobile Number</label>
+                            <input type="text" class="form-control" required name="mobile" placeholder="Enter Mobile Number" disabled value="{{mobile}}">
+                        </div>
+                        {% comment %} <div class="form-group">
+                            <label for="exampleInputEmail1">Landline</label>
+                            <input type="text" class="form-control" required name="landline" placeholder="Enter Landline" disabled value="{{landline}}">
+                        </div> {% endcomment %}
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Personal Email</label>
+                            <input type="email" class="form-control" required name="personal_email" placeholder="Enter Personal Email" disabled value="{{personal_email}}">
+                        </div> 
+    
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Official Email</label>
+                            <input type="email" class="form-control" required name="official_email" placeholder="Enter Official Email" disabled value="{{official_email}}">
+                        </div> 
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Permanent Address</label>
+                            <textarea type="text" class="form-control" required placeholder="Enter Permanent Address" name="permanent_address" disabled > {{permanent_address}}</textarea>
+                        </div>
+                    </div>
+                </div>    
+            </div>
+    </div>
+    {% endif%}
+{% endblock %}

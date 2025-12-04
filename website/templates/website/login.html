@@ -1,0 +1,520 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Index</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'website/styles.css' %}">
+
+
+    <style>
+        /* Full Page Background */
+        .background-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            background: url('https://media.getmyuni.com/assets/images/articles/a7il1ubjntaan20s77ipai8tivuyp386er.jpg') no-repeat center center/cover;
+        }
+
+        /* Overlay for better text visibility */
+        .overlay {
+           
+            position: absolute;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Dark overlay for better contrast */
+        }
+
+        /* Centered Login Form */
+        .login-form {
+           
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 350px;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+            position: relative;
+            z-index: 10;
+            pointer-events: auto;
+        }
+
+        /* Input Fields */
+        .login-form input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        /* Login Button */
+        .login-form button {
+            width: 100%;
+            background: #007bff;
+            color: white;
+            padding: 12px;
+            border: none;
+            margin-top: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .login-form button:hover {
+            background: #0056b3;
+        }
+
+        /* Links */
+        .login-form a {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        /* Footer Text */
+        .footer-text {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        /* Hover Effect */
+        .footer-text span {
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .footer-text span:hover {
+            color: #3B82F6;
+        }
+
+        /* Fade-in Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .footer-link {
+            color: #b0b0b0;
+            text-decoration: none;
+            transition: color 0.3s ease-in-out;
+        }
+      
+        .footer-link:hover {
+            color: #0f83ff;
+            text-decoration: underline;
+        }
+
+        .form-section {
+            display: none;
+        }
+        
+        
+        .toggle-buttons {
+            position: absolute;
+            top: 80px;
+            width: 100%;
+            z-index: 2; 
+        }
+     
+        
+        
+    </style>
+    <script>
+        function showForm(role) {
+            if (role === 'teacher') {
+                document.getElementById('teacherForm').style.display = 'block';
+                document.getElementById('hodForm').style.display = 'none';
+                document.getElementById('AdminForm').style.display = 'none';
+
+            } else if(role === 'admin') {
+                document.getElementById('teacherForm').style.display = 'none';
+                document.getElementById('hodForm').style.display = 'none';
+                document.getElementById('AdminForm').style.display = 'block';
+            }
+
+            else{
+                document.getElementById('teacherForm').style.display = 'none';
+                document.getElementById('hodForm').style.display = 'block';
+                document.getElementById('AdminForm').style.display = 'none';
+            }
+
+            }
+        
+    
+        
+        window.onload = function () {
+             const role = document.body.getElementByID('current');
+    showForm('');
+             // or 'head' if you want that to show first
+        };
+    </script>
+    
+</head>
+<body>
+
+    <!-- Background Section -->
+    
+    <div class="background-container">
+        <div class="overlay"></div>
+
+        <h1 style="text-align:center;color:white;position:relative;top:10px;z-index:5;font-size:larger">FORUM FOR NAAC TEAM (PUNJABI UNIVERSITY,PATIALA) </h1>
+<!-- 
+<h1 style="font-size: 2vw; color: white; text-align: center; position: relative; top: 10px; z-index: 5;">
+  FORUM FOR NAAC TEAM (PUNJABI UNIVERSITY, PATIALA)
+</h1> -->
+
+       
+
+     <div class="toggle-buttons text-center" style="top:100px;" id=current  >
+        <button type="button" class="btn btn-outline-light btn-sm" onclick="showForm('teacher')">Teacher Login</button>
+        <button type="button" class="btn btn-outline-light btn-sm" onclick="showForm('hod')">Head Login</button>
+        <button type="button" class="btn btn-outline-light btn-sm" onclick="showForm('admin')">Admin Login</button>
+
+    </div>
+
+       
+        
+ 
+
+<!-- Teacher Login Form -->
+<div class="login-form" id="teacherForm">
+    <h2 style="color: #333; margin-bottom: 20px;">Teacher Login</h2>
+    <form method="post" action="{% url 'login_view' %}">
+        {% csrf_token %}
+       {% if message_teacher %}
+    <p style="color: red;">{{ message_teacher }}</p>
+{% endif %}
+
+        <input type="text" name="employee_code" placeholder="Enter employee id" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <input type="hidden" name="user_type" value="teacher">
+        <button type="submit">Login</button>
+    </form>
+    <p style="margin-top: 10px;">Forgot Password? <a href="{% url 'forget_password' %}">Click Here</a></p>
+    <p>Not a Teacher? <a href="{% url 'register_user' %}">Sign Up</a></p>
+</div>
+
+<!-- Head Login Form -->
+<div class="login-form" id="hodForm" style="display: none;">
+    <h2 style="color: #333; margin-bottom: 20px;">Head Login</h2>
+    <form method="post" action="{% url 'login_view' %}">
+        {% csrf_token %}
+        {% if message_head %}
+            <p style="color: red;">{{ message_head}}</p>
+        {% endif %}
+        {% comment %} <input type="text" name="department" placeholder="Enter Department Name" required> {% endcomment %}
+
+        <div class="form-group">
+           
+            <select name="dept" id="" class="form-control">
+                <option value="">Select Department</option>
+                <option value="Department Of Dance">Department Of Dance</option>
+                <option value="Department Of Gurmat Sangeet">Department Of Gurmat Sangeet</option>
+                <option value="Department Of Gurmat Gyan Online Study Centre">Department Of Gurmat Gyan Online Study Centre</option>
+                <option value="Department Of Music">Department Of Music</option>
+                <option value="Department Of Theatre And Television">Department Of Theatre And Television</option>
+                <option value="S. Sobha Singh Department Of Fine Arts">S. Sobha Singh Department Of Fine Arts</option>
+                <option value="Department Of English">Department Of English</option>
+                <option value="Department Of Foreign Languages">Department Of Foreign Languages</option>
+                <option value="Department Of Hindi">Department Of Hindi</option>
+                <option value="Department Of Linguistics And Punjabi Lexicography">Department Of Linguistics And Punjabi Lexicography</option>
+                <option value="Department Of Persian, Urdu And Arabic">Department Of Persian, Urdu And Arabic</option>
+                <option value="Department Of Punjabi">Department Of Punjabi</option>
+                <option value="Department Of Sanskrit And Pali">Department Of Sanskrit And Pali</option>
+                <option value="Department Of Defence And Strategic Studies">Department Of Defence And Strategic Studies</option>
+                <option value="Department Of Economics">Department Of Economics</option>
+                <option value="Department Of History and Punjab Historical Studies">Department Of History and Punjab Historical Studies</option>
+                <option value="Department Of Philosophy">Department Of Philosophy</option>
+                <option value="Department Of Political Science">Department Of Political Science</option>
+                <option value="Department Of Psychology">Department Of Psychology</option>
+                <option value="Department Of Public Administration">Department Of Public Administration</option>
+                <option value="Department Of Religious Studies">Department Of Religious Studies</option>
+                <option value="Department Of Social Work">Department Of Social Work</option>
+                <option value="Department Of Sociology And Social Anthropology">Department Of Sociology And Social Anthropology</option>
+                <option value="Women's Studies Centre">Women's Studies Centre</option>
+                <option value="School Of Social Sciences">School Of Social Sciences</option>
+                <option value="Department Of Commerce">Department Of Commerce</option>
+                <option value="Department Of Tourism, Hospitality And Hotel Management">Department Of Tourism, Hospitality And Hotel Management</option>
+                <option value="School Of Management Studies">School Of Management Studies</option>
+                <option value="University School Of Applied Management">University School Of Applied Management</option>
+                <option value="University School of Buisness Studies, Guru Kashi Campus, Talwandi Sabo">University School of Buisness Studies, Guru Kashi Campus, Talwandi Sabo</option>
+                <option value="Department Of Law, Punjabi University, Patiala">Department Of Law, Punjabi University, Patiala</option>
+                <option value="Punjab School Of Law">Punjab School Of Law</option>
+                <option value="Centre for Census Studies and Research">Centre for Census Studies and Research</option>
+                <option value="Baba Farid Centre for Sufi Studies">Baba Farid Centre for Sufi Studies</option>
+                <option value="Centre for Diaspora Studies">Centre for Diaspora Studies</option>
+                <option value="Centre for Development Economics and Innovation Studies (CDEIS)">Centre for Development Economics and Innovation Studies (CDEIS)</option>
+                <option value="Department Of Sri Guru Granth Sahib Studies">Department Of Sri Guru Granth Sahib Studies</option>
+                <option value="Department of Punjabi Development Language">Department of Punjabi Development Language</option>
+                <option value="Institute of Advanced Studies in Comparative Religion Dr. Balbir Singh Kendra, Dehradun">Institute of Advanced Studies in Comparative Religion Dr. Balbir Singh Kendra, Dehradun</option>
+                <option value="Punjabi Literary Studies">Punjabi Literary Studies</option>
+                <option value="Research Centre for Technical Development of Punjabi Language, Literature and Culture">Research Centre for Technical Development of Punjabi Language, Literature and Culture</option>
+                <option value="Prof. Harbans Singh Encylopaedia of Sikhism">Prof. Harbans Singh Encylopaedia of Sikhism</option>
+                <option value="Department Of Computer Science">Department Of Computer Science</option>
+                <option value="Department Of Biotechnology & Food Technology">Department Of Biotechnology & Food Technology</option>
+                <option value="Department Of Botany">Department Of Botany</option>
+                <option value="Department Of Human Genetics">Department Of Human Genetics</option>
+                <option value="Department Of Zoology And Environmental Sciences">Department Of Zoology And Environmental Sciences</option>
+                <option value="Bhagwan Parshuram Chair For Indian Culture and Literature">Bhagwan Parshuram Chair For Indian Culture and Literature</option>
+                <option value="Bhai Gurdass Chair">Bhai Gurdass Chair</option>
+                <option value="Bhai Vir Singh Chair">Bhai Vir Singh Chair</option>
+                <option value="Gurmat Sangeet Chair">Gurmat Sangeet Chair</option>
+                <option value="Maharishi Valmiki Chair">Maharishi Valmiki Chair</option>
+                <option value="Maharaja Agrasen Chair">Maharaja Agrasen Chair</option>
+                <option value="Maharana Pratap Chair">Maharana Pratap Chair</option>
+                <option value="Shahid Kartar Singh Sarabha Chair">Shahid Kartar Singh Sarabha Chair</option>
+                <option value="Sri Guru Tegh Bahadur National Integration Chair">Sri Guru Tegh Bahadur National Integration Chair</option>
+                <option value="Shahid Udham Singh Chair">Shahid Udham Singh Chair</option>
+                <option value="Guru Gobind Singh Chair">Guru Gobind Singh Chair</option>
+                <option value="Guru Ravidass Chair">Guru Ravidass Chair</option>
+                <option value="Prof. Gurdial Singh Chair">Prof. Gurdial Singh Chair</option>
+                <option value="Centre For Advanced Media Studies">Centre For Advanced Media Studies</option>
+                <option value="Department Of Education And Community Service">Department Of Education And Community Service</option>
+                <option value="Department Of Journalism And Mass Communication">Department Of Journalism And Mass Communication</option>
+                <option value="Department Of Library And Information Science">Department Of Library And Information Science</option>
+                <option value="Department Of Physical Education">Department Of Physical Education</option>
+                <option value="Department Of Civil Engineering">Department Of Civil Engineering</option>
+                <option value="Department Of Computer Science and Engineering">Department Of Computer Science and Engineering</option>
+                <option value="Department Of Electronics & Communication Engineering">Department Of Electronics & Communication Engineering</option>
+                <option value="Department Of Mechanical Engineering">Department Of Mechanical Engineering</option>
+                <option value="Yadavindra Department of Engineering, Talwandi Sabo">Yadavindra Department of Engineering, Talwandi Sabo</option>
+                <option value="Department Of Pharmaceutical Sciences And Drug Research">Department Of Pharmaceutical Sciences And Drug Research</option>
+                <option value="Department Of Physiotherapy">Department Of Physiotherapy</option>
+                <option value="Department Of Sports Science">Department Of Sports Science</option>
+                <option value="Department Of Chemistry">Department Of Chemistry</option>
+                <option value="Department Of Forensic Science">Department Of Forensic Science</option>
+                <option value="Department Of Geography">Department Of Geography</option>
+                <option value="Department Of Mathematics">Department Of Mathematics</option>
+                <option value="Department Of Physics">Department Of Physics</option>
+                <option value="Department Of Statistics">Department Of Statistics</option>
+                <option value="Biological Sciences">Biological Sciences</option>
+                <option value="Languages">Languages</option>
+                <option value="Mathematical and Computational Sciences">Mathematical and Computational Sciences</option>
+                <option value="Physical and Chemical Sciences">Physical and Chemical Sciences</option>
+                <option value="Performing and Visual Arts">Performing and Visual Arts</option>
+                <option value="Social Sciences">Social Sciences</option>
+                <option value="Centre For Restoration Of Ecosystem Of Punjab (CRESP)">Centre For Restoration Of Ecosystem Of Punjab (CRESP)</option>
+                <option value="IAS Training Centre">IAS Training Centre</option>
+                <option value="UGC - Malaviya Mission Teacher Training Centre">UGC - Malaviya Mission Teacher Training Centre</option>
+                <option value="Unnat Bharat Abhiyan">Unnat Bharat Abhiyan</option>
+            </select>
+        </div>
+
+        <input type="password" name="password" placeholder="Password" required>
+        <input type="hidden" name="user_type" value="head">
+        <button type="submit">Login</button>
+    </form>
+  
+</div>
+
+<div class="login-form" id="AdminForm" style="display:none">
+    <h2 style="color: #333; margin-bottom: 20px;">Admin Login</h2>
+    
+    <form method="post" action="{% url 'login_view' %}">
+        {% csrf_token %}
+        {% if message_admin %}
+            <p style="color: red;">{{ message_admin }}</p>
+        {% endif %}
+       <input type="text" name="username" value="admin" placeholder="Username" readonly>
+
+    
+
+
+        <input type="password" name="password" placeholder="Password" required>
+        <input type="email" name="email" placeholder="Enter email" required>
+        <input type="text" name="aadhar" placeholder="Enter aadhar no" required>
+        
+        <input type="hidden" name="user_type" value="admin">
+        <button type="submit">Login</button>
+        <br>
+        
+       <p>Change Password ?  <a href="{% url 'forget_password_admin'%}"> Click here </a></p>
+    </form>
+   
+</div>
+
+
+
+
+        <!-- Footer Text -->
+        <div class="footer-text">
+            <span>Think</span> • <span>Research</span> • <span>Innovate</span>
+        </div>
+    </div>
+
+</body>
+</html>
+
+    {% comment %} <style>
+        .container-fluid{
+            padding: 2% 5%;
+        }
+        .text{
+            margin-top: 20%;
+        }
+        .row{
+            height: auto;
+        }
+        .form_div{
+            padding: 10px 10px;
+            margin-top: 5%;
+            box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+        }
+        .contents{
+            margin-top: 10%;
+        }
+
+        
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+        
+    </style>
+</head>
+<body>
+    <div class="container-fluid" >
+        <div class="row">
+             <div class="col-md-8" style="background-image: url('https://media.getmyuni.com/assets/images/articles/a7il1ubjntaan20s77ipai8tivuyp386er.jpg'); background-size: cover; 
+             background-repeat: no-repeat;
+             background-position: center;">
+               
+            </div>
+            <div class="col-md-4">
+                <div class="form_div">
+                    <h5 class="card-title" style="font-size: 4vmax;font-family: open sans,sans-serif;
+                    color: #333;margin-top: 5%;margin-left: 5%;">LOGIN</h5>
+                    <div class="contents" style="padding: 5% 5%;">
+                        <form method="post" action="{% url 'login_view' %}">
+                            {% csrf_token %}
+                            {% if message%}
+                            <div class="form-group">
+                                <label for="exampleInputPassword1" style="color: red;">{{message}}</label>
+                              </div>
+                            {% endif %}
+                            <div class="form-group">
+                              <label for="exampleInputEmail1">AADHAR Number</label>
+                              <input type="text" name="aadhar" class="form-control" placeholder="Enter Aadhar Number" required>
+                              <small id="emailHelp" class="form-text text-muted">We'll never share your Aadhar with anyone else.</small>
+                            </div>
+                            <div class="form-group">
+                              <label for="exampleInputPassword1">Password</label>
+                              <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required>
+                            </div>
+                            <div class="form-check">
+                              <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
+                              <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary" style="margin-top: 5%;">Submit</button>
+                            <div class="create" style="padding: 5%;padding-bottom: 1%;">
+                                <p>Forgot Your Password <a href="{% url 'forget_password'%}">Click here</a></p>
+                            </div>
+                            <div class="create" style="padding: 5%;padding-top: 0%;">
+                                <p>Not an existing Teacher? <a href="{% url 'register_user'%}">Create an Account Here</a></p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            
+           
+        </div>
+        
+        <div style="display: flex; justify-content: center; gap: 24px; font-size: 2.25rem; font-weight: 600; color: #2D3748; margin: 40px 0; animation: fadeIn 1s ease-in-out;">
+            <span style="transition: color 0.3s;" onmouseover="this.style.color='#3B82F6'" onmouseout="this.style.color='#2D3748'">Think</span>
+            <span style="transition: color 0.3s;" onmouseover="this.style.color='#3B82F6'" onmouseout="this.style.color='#2D3748'">Research</span>
+            <span style="transition: color 0.3s;" onmouseover="this.style.color='#3B82F6'" onmouseout="this.style.color='#2D3748'">Innovate</span>
+        </div>
+        
+        {% endcomment %}
+       
+        
+
+
+                </div>  
+                <footer style="background-color: #282d32; padding: 50px 0; font-family: Arial, sans-serif;">
+                    <div class="container">
+                        <div class="row">
+                            <!-- Services Section -->
+                            <div class="col-sm-6 col-md-3 item">
+                                <h3 style="color: white; font-weight: bold; font-size: 20px; margin-bottom: 15px;">Services</h3>
+                                <ul style="list-style: none; padding: 0; font-size: 16px;">
+                                    <li><a href="{% url 'patent_register' %}" class="footer-link">Patents</a></li>
+                                    <li><a href="{% url 'phd_awarded' %}" class="footer-link">Ph.D's</a></li>
+                                    <li><a href="{% url 'research_publication' %}" class="footer-link">Research Papers</a></li>
+                                    <li><a href="{% url 'awards' %}" class="footer-link">Awards</a></li>
+                                    <li><a href="{% url 'books' %}" class="footer-link">Books Published</a></li>
+                                    <li><a href="{% url 'conference' %}" class="footer-link">Book Chapters & Conferences</a></li>
+                                </ul>
+                            </div>
+                  
+                            <!-- About Section -->
+                            <div class="col-sm-6 col-md-3 item">
+                                <h3 style="color: white; font-weight: bold; font-size: 20px; margin-bottom: 15px;">About</h3>
+                                <p style="color: #b0b0b0; font-size: 16px;">A forum for uploading the data for NAAC.</p>
+                            </div>
+                  
+                            <!-- Designed By Section -->
+                            <div class="col-md-3 item text">
+                                <h3 style="color: white; font-weight: bold; font-size: 20px; margin-bottom: 15px;">Designed & Developed By</h3>
+                                <h5 style="color: #0f83ff;font-size: 17px; margin-bottom: 5px;">Hitashu</h5>
+                                <p style="color: #b0b0b0; font-size: 16px; margin-bottom: 5px;">
+                                    Gmail: <a href="mailto:hitashuh@gmail.com" class="footer-link">hitashuh@gmail.com</a>                             
+                                <p style="color: #b0b0b0; font-size: 16px;">
+                                    LinkedIn: <a href="https://www.linkedin.com/in/hitashu-585357354Vanity URL name" class="footer-link">View Profile</a>
+                                </p>
+                            </div>
+                  
+                            <!-- Guidance Section -->
+                            <div class="col-md-3 item text">
+                                <h3 style="color: white; font-weight: bold; font-size: 20px; margin-bottom: 15px;">Under the Guidance of</h3>
+                                <div>
+                                    <div class="abc" style="margin-bottom: 12px;">
+                                        <h6 style="color:#0f83ff ; font-size: 16px; margin-bottom: 5px;">Dr. Gaurav Gupta</h6>
+                                        
+                                    </div>
+                  
+                                    <div class="abc" style="margin-bottom: 12px;">
+                                        <h6 style="color: #0f83ff; font-size: 16px; margin-bottom: 5px;">Dr. Gurjit Singh Bhathal </h6>
+                                        
+                                    </div>
+                  
+                                    <div class="abc" style="margin-bottom: 12px;">
+                                        <h6 style="color: #0f83ff; font-size: 16px; margin-bottom: 5px;">Dr. Brahmaleen K. Sidhu </h6>
+                                        
+                                    </div>
+                                    
+                                    <h5 style="color: white; font-size: 17px; margin-top: 10px;">Department of C.S.E</h5>
+                                </div>
+                            </div>
+                        </div>
+                  
+                        <hr style="border-color: #444; margin: 30px 0;">
+                  
+                        <!-- Copyright Section -->
+                        <p class="copyright text-center" style="color: #b0b0b0; font-size: 15px;">
+                            <b>Department of CSE, Punjabi University, Patiala © 2025</b>
+                        </p>
+                    </div>
+                  </footer>
+                  </body>
+                  </html>
+                  
+                  
+                  

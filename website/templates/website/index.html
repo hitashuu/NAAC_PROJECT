@@ -1,0 +1,254 @@
+{% extends 'website/layout.html' %}
+
+{% load static %}
+
+{% block body%}
+<style>
+  .col-md-4{
+    padding:1%;
+  }
+</style>
+
+
+<div class="row">
+    <div class="col-md-12">
+      <div class="welcome2">
+        <h2 style="font-family: Helvetica Neue;">{{date}}</h2>
+        <h1 style="font-family: Helvetica Neue;margin-bottom: 10px;">Good {{mor_eve}}, {{current_user.employee_name}}</h1></b>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="content_stats">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="card" style="width: auto;">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-8">
+                    <h3 class="card-title"><a href="{% url 'patent_display'%}">Patents</a></h3>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="number" style="float: right;">
+                       <p style="font-size: 50px;padding-bottom: 10%;" class="card-text">{{patents}}</p> 
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card" style="width: auto;">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-8">
+                    <h3 class="card-title"><a href="{% url 'phd_display' %}">Ph.D's</a></h3>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="number" style="float: right;">
+                      <p style="font-size: 50px;padding-bottom: 10%;" class="card-text">{{phds}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card" style="width: auto;">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-8">
+                    <h3 class="card-title"><a href="{% url 'research_display'%}">Research Publications</a></h3>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="number" style="float: right;">
+                      <p style="font-size: 50px;padding-bottom: 10%;" class="card-text">{{papers}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row" style="margin-top: 20px;">
+          <div class="col-md-4">
+            <div class="card" style="width: auto;">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-8">
+                    <h3 class="card-title"><a href="{% url 'award_display'%}">Awards</a></h3>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="number" style="float: right;">
+                      <p style="font-size: 50px;padding-bottom: 10%;" class="card-text">{{awards}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card" style="width: auto;">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-8">
+                    <h3 class="card-title"><a href="{% url 'books_display'%}">Books</a></h3>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="number" style="float: right;">
+                      <p style="font-size: 50px;padding-bottom: 10%;" class="card-text">{{books}}</p>
+                    </div>
+                  </div>
+              </div>
+            </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card" style="width: auto;">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-8">
+                    <h3 class="card-title"><a href="{% url 'conference_display' %}">Conference Proceedings</a></h3>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="number" style="float: right;">
+                      <p style="font-size: 50px;padding-bottom: 10%;" class="card-text">{{conference}}</p>
+                    </div>
+                  </div>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br>
+
+
+
+
+
+
+
+
+
+  {% if request.session.is_admin or request.session.is_head %}
+
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="welcome2">
+        {% comment %} <h2 style="font-family: Helvetica Neue;">{{date}}</h2> {% endcomment %}
+        <h1 style="font-family: Helvetica Neue;margin-bottom: 10px;">Employees Details</h1></b>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="content_stats">
+        <div class="row">
+          <div class="col-md-4" >
+            <div class="card" style="width: auto;text-align:centre;">
+              <div class="card-body">
+                 <div class="row">
+                  <div class="col-md-8" >
+                    <h3  class="card-title"><a href="{% url 'personal_display'%}">Personal</a></h3>
+                  </div>  
+                 
+                </div>  
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card" style="width: auto;">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-8">
+                    <h3 class="card-title"><a href="{% url 'work_display' %}">Work</a></h3>
+                  </div>
+                  {% comment %} <div class="col-md-4">
+                    <div class="number" style="float: right;">
+                      <p style="font-size: 100px;padding-bottom: 10%;" class="card-text">{{work}}</p>
+                    </div>
+                  </div> {% endcomment %}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card" style="width: auto;">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-8">
+                    <h3 class="card-title"><a href="{% url 'contact_display'%}">Contact</a></h3>
+                  </div>
+                  {% comment %} <div class="col-md-4">
+                    <div class="number" style="float: right;">
+                      <p style="font-size: 100px;padding-bottom: 10%;" class="card-text">{{contact}}</p>
+                    </div>
+                  </div> {% endcomment %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row" style="margin-top: 20px;">
+          <div class="col-md-4">
+            <div class="card" style="width: auto;">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-8">
+                    <h3 class="card-title"><a href="{% url 'bank_display'%}">Bank</a></h3>
+                  </div>
+                  {% comment %} <div class="col-md-4">
+                    <div class="number" style="float: right;">
+                      <p style="font-size: 100px;padding-bottom: 10%;" class="card-text">{{banks}}</p>
+                    </div>
+                  </div> {% endcomment %}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card" style="width: auto;">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-8">
+                    <h3 class="card-title"><a href="{% url 'experience_display'%}">Experience</a></h3>
+                  </div>
+                  {% comment %} <div class="col-md-4">
+                    <div class="number" style="float: right;">
+                      <p style="font-size: 100px;padding-bottom: 10%;" class="card-text">{{Experience}}</p>
+                    </div>
+                  </div> {% endcomment %}
+              </div>
+            </div>
+            </div>
+          </div>
+          {% comment %} <div class="col-md-4">
+            <div class="card" style="width: auto;">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-8">
+                    <h3 class="card-title"><a href="{% url 'conference_display' %}">Conference Proceedings</a></h3>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="number" style="float: right;">
+                      <p style="font-size: 100px;padding-bottom: 10%;" class="card-text">{{conference}}</p>
+                    </div>
+                  </div>
+              </div>
+              </div>
+            </div> {% endcomment %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% endif %}
+
+{% endblock %}

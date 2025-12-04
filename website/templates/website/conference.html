@@ -1,0 +1,149 @@
+{% extends 'website/layout.html' %}
+
+
+{% block body %}
+<style>
+    .form_div{
+            padding: 10px 10px;
+            box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+        }
+    
+</style>
+
+    <div class="form_div">
+        {% if edit_conference %}
+        <form action="{% url 'edit_conference' edit_conference.id %}" method="post">
+            {% csrf_token%}
+        <h1> Edit Conference Published/Awarded</h1>
+        <hr>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="details">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Name of the Author(s)</label>
+                        <input type="text" class="form-control" required name="author_name" placeholder="Name of the Name of the Author(s)" value="{{edit_conference.authors}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Category</label>
+                        <select name="category" id="" class="form-control">
+                            <option value="Book Chapter">Book Chapter</option>
+                            <option value="Conference Proceedings">Conference Proceedings</option>
+                            <option value="paper presented">Paper Presented</option>
+                        </select>
+                        {{edit_conference.category}}
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Type of Conference</label>
+                        <select name="type" id="" class="form-control">
+                            <option value="National">National</option>
+                            <option value="International">International</option>
+                        </select>
+                        {{edit_conference.type_conf}}
+                    </div>
+                    <div class="form-group" style="margin-top: 26px;">
+                        <label for="exampleInputEmail1">Publisher</label>
+                        <input type="text" class="form-control" required name="publisher" placeholder="Enter Publisher Name " value="{{edit_conference.publisher}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Date</label>
+                        <input type="date" class="form-control" required name="date" placeholder="">
+                        {{edit_conference.date}}
+                    </div>
+
+                    
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="details">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Title of the Chapter/Paper</label>
+                        <textarea type="text" class="form-control" required name="title_ch_paper" placeholder="Enter the Title of the Chapter/Paper" rows="3">{{edit_conference.title_chap_paper}}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Title of Book/Conference</label>
+                        <textarea type="text" class="form-control" required name="title_book_conf" placeholder="Enter the Title of Book/Conference" rows="3">{{edit_conference.title_book_conf}}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">ISBN</label>
+                        <input type="text" class="form-control" required name="isbn" placeholder="Enter ISBN Number" value="{{edit_conference.isbn}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">PP<strong style="color:red"> (for example: New York, USA)</strong></label>
+                        <input type="text" class="form-control" required name="pp" placeholder="Enter PP" value="{{edit_conference.pp}}">
+                    </div>
+                </div>
+            </div>    
+        </div>
+            <div class="submit_button"  style="margin-top: 3%;padding: 3%;">
+                <center><button type="submit" class="btn btn-primary">Submit</button></center>
+            </div>
+        </form>
+        
+        {% else %}
+        <form action="{% url 'conference'%}" method="post">
+            {% csrf_token%}
+        <h1>Book Chapter / Conference Proceedings / Paper Presented</h1>
+        <hr>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="details">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Name of the Author(s)</label>
+                        <input type="text" class="form-control" required name="author_name" placeholder="Name of the Name of the Author(s)">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Category</label>
+                        <select name="category" id="" class="form-control">
+                            <option value="Book Chapter">Book Chapter</option>
+                            <option value="Conference Proceedings">Conference Proceedings</option>
+                            <option value="paper presented">Paper Presented</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Type of Conference</label>
+                        <select name="type" id="" class="form-control">
+                            <option value="National">National</option>
+                            <option value="International">International</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="margin-top: 26px;">
+                        <label for="exampleInputEmail1">Publisher</label>
+                        <input type="text" class="form-control" required name="publisher" placeholder="Enter Publisher Name ">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Date</label>
+                        <input type="date" class="form-control" required name="date" placeholder="">
+                    </div>
+
+                    
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="details">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Title of the Chapter/Paper</label>
+                        <textarea type="text" class="form-control" required name="title_ch_paper" placeholder="Enter the Title of the Chapter/Paper" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Title of Book/Conference</label>
+                        <textarea type="text" class="form-control" required name="title_book_conf" placeholder="Enter the Title of Book/Conference" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">ISBN</label>
+                        <input type="text" class="form-control" required name="isbn" placeholder="Enter ISBN Number">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">PP<strong style="color:red"> (for example: New York, USA)</strong></label>
+                        <input type="text" class="form-control" required name="pp" placeholder="Enter PP">
+                    </div>
+                </div>
+            </div>    
+        </div>
+            <div class="submit_button"  style="margin-top: 3%;padding: 3%;">
+                <center><button type="submit" class="btn btn-primary">Submit</button></center>
+            </div>
+        </form>
+        {% endif %}
+    </div>
+
+{% endblock %}

@@ -1,0 +1,287 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Email Update</title>
+
+  <!-- Bootstrap CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"></script>
+
+  <link rel="stylesheet" href="{% static 'website/styles.css' %}">
+
+  <style>
+    :root {
+      --percent: {{score}}%;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
+    }
+
+    main {
+      flex: 1;
+    }
+
+    .form_div {
+      padding: 30px 20px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .submit_button {
+      margin-top: 15px;
+    }
+
+    .footer-link {
+      color: #b0b0b0;
+      text-decoration: none;
+    }
+
+    .footer-link:hover {
+      color: #0f83ff;
+      text-decoration: underline;
+    }
+
+    footer {
+      background-color: #282d32;
+      padding: 60px 0 20px 0;
+      color: #b0b0b0;
+    }
+
+    .navbar {
+      background-color: #282d32;
+    }
+
+    .navbar .nav-link,
+    .navbar-brand {
+      color: white !important;
+    }
+
+    .navbar .btn {
+      font-size: 0.9rem;
+      padding: 5px 10px;
+      border-radius: 5px;
+    }
+
+    .navbar-dark .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 0.8)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+
+    <div class="container-fluid px-4">
+      <a class="navbar-brand fw-bold" href="#">NAAC</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+        <span class="navbar-toggler-icon text-white"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link active" href="{% url 'index' %}">Home</a>
+          </li>
+        </ul>
+        <a href="{% url 'logout_view' %}" class="btn btn-primary ml-2 text-white">Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Flash Messages -->
+  {% if messages %}
+    {% for message in messages %}
+      <div class="container mt-3">
+        <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  <!-- Main Section -->
+  <main>
+    <div class="container form_div">
+      <form method="post" action="{% url 'delete_head' %}">
+        {% csrf_token %}
+        <h2 class="text-danger">Delete Head</h2>
+        <hr>
+
+        
+
+        <div class="form-group">
+            <label>Select Department </label>
+           
+            <select name="department" id="" class="form-control">
+                <option value="">Select Department</option>
+                <option value="Department Of Dance">Department Of Dance</option>
+                <option value="Department Of Gurmat Sangeet">Department Of Gurmat Sangeet</option>
+                <option value="Department Of Gurmat Gyan Online Study Centre">Department Of Gurmat Gyan Online Study Centre</option>
+                <option value="Department Of Music">Department Of Music</option>
+                <option value="Department Of Theatre And Television">Department Of Theatre And Television</option>
+                <option value="S. Sobha Singh Department Of Fine Arts">S. Sobha Singh Department Of Fine Arts</option>
+                <option value="Department Of English">Department Of English</option>
+                <option value="Department Of Foreign Languages">Department Of Foreign Languages</option>
+                <option value="Department Of Hindi">Department Of Hindi</option>
+                <option value="Department Of Linguistics And Punjabi Lexicography">Department Of Linguistics And Punjabi Lexicography</option>
+                <option value="Department Of Persian, Urdu And Arabic">Department Of Persian, Urdu And Arabic</option>
+                <option value="Department Of Punjabi">Department Of Punjabi</option>
+                <option value="Department Of Sanskrit And Pali">Department Of Sanskrit And Pali</option>
+                <option value="Department Of Defence And Strategic Studies">Department Of Defence And Strategic Studies</option>
+                <option value="Department Of Economics">Department Of Economics</option>
+                <option value="Department Of History and Punjab Historical Studies">Department Of History and Punjab Historical Studies</option>
+                <option value="Department Of Philosophy">Department Of Philosophy</option>
+                <option value="Department Of Political Science">Department Of Political Science</option>
+                <option value="Department Of Psychology">Department Of Psychology</option>
+                <option value="Department Of Public Administration">Department Of Public Administration</option>
+                <option value="Department Of Religious Studies">Department Of Religious Studies</option>
+                <option value="Department Of Social Work">Department Of Social Work</option>
+                <option value="Department Of Sociology And Social Anthropology">Department Of Sociology And Social Anthropology</option>
+                <option value="Women's Studies Centre">Women's Studies Centre</option>
+                <option value="School Of Social Sciences">School Of Social Sciences</option>
+                <option value="Department Of Commerce">Department Of Commerce</option>
+                <option value="Department Of Tourism, Hospitality And Hotel Management">Department Of Tourism, Hospitality And Hotel Management</option>
+                <option value="School Of Management Studies">School Of Management Studies</option>
+                <option value="University School Of Applied Management">University School Of Applied Management</option>
+                <option value="University School of Buisness Studies, Guru Kashi Campus, Talwandi Sabo">University School of Buisness Studies, Guru Kashi Campus, Talwandi Sabo</option>
+                <option value="Department Of Law, Punjabi University, Patiala">Department Of Law, Punjabi University, Patiala</option>
+                <option value="Punjab School Of Law">Punjab School Of Law</option>
+                <option value="Centre for Census Studies and Research">Centre for Census Studies and Research</option>
+                <option value="Baba Farid Centre for Sufi Studies">Baba Farid Centre for Sufi Studies</option>
+                <option value="Centre for Diaspora Studies">Centre for Diaspora Studies</option>
+                <option value="Centre for Development Economics and Innovation Studies (CDEIS)">Centre for Development Economics and Innovation Studies (CDEIS)</option>
+                <option value="Department Of Sri Guru Granth Sahib Studies">Department Of Sri Guru Granth Sahib Studies</option>
+                <option value="Department of Punjabi Development Language">Department of Punjabi Development Language</option>
+                <option value="Institute of Advanced Studies in Comparative Religion Dr. Balbir Singh Kendra, Dehradun">Institute of Advanced Studies in Comparative Religion Dr. Balbir Singh Kendra, Dehradun</option>
+                <option value="Punjabi Literary Studies">Punjabi Literary Studies</option>
+                <option value="Research Centre for Technical Development of Punjabi Language, Literature and Culture">Research Centre for Technical Development of Punjabi Language, Literature and Culture</option>
+                <option value="Prof. Harbans Singh Encylopaedia of Sikhism">Prof. Harbans Singh Encylopaedia of Sikhism</option>
+                <option value="Department Of Computer Science">Department Of Computer Science</option>
+                <option value="Department Of Biotechnology & Food Technology">Department Of Biotechnology & Food Technology</option>
+                <option value="Department Of Botany">Department Of Botany</option>
+                <option value="Department Of Human Genetics">Department Of Human Genetics</option>
+                <option value="Department Of Zoology And Environmental Sciences">Department Of Zoology And Environmental Sciences</option>
+                <option value="Bhagwan Parshuram Chair For Indian Culture and Literature">Bhagwan Parshuram Chair For Indian Culture and Literature</option>
+                <option value="Bhai Gurdass Chair">Bhai Gurdass Chair</option>
+                <option value="Bhai Vir Singh Chair">Bhai Vir Singh Chair</option>
+                <option value="Gurmat Sangeet Chair">Gurmat Sangeet Chair</option>
+                <option value="Maharishi Valmiki Chair">Maharishi Valmiki Chair</option>
+                <option value="Maharaja Agrasen Chair">Maharaja Agrasen Chair</option>
+                <option value="Maharana Pratap Chair">Maharana Pratap Chair</option>
+                <option value="Shahid Kartar Singh Sarabha Chair">Shahid Kartar Singh Sarabha Chair</option>
+                <option value="Sri Guru Tegh Bahadur National Integration Chair">Sri Guru Tegh Bahadur National Integration Chair</option>
+                <option value="Shahid Udham Singh Chair">Shahid Udham Singh Chair</option>
+                <option value="Guru Gobind Singh Chair">Guru Gobind Singh Chair</option>
+                <option value="Guru Ravidass Chair">Guru Ravidass Chair</option>
+                <option value="Prof. Gurdial Singh Chair">Prof. Gurdial Singh Chair</option>
+                <option value="Centre For Advanced Media Studies">Centre For Advanced Media Studies</option>
+                <option value="Department Of Education And Community Service">Department Of Education And Community Service</option>
+                <option value="Department Of Journalism And Mass Communication">Department Of Journalism And Mass Communication</option>
+                <option value="Department Of Library And Information Science">Department Of Library And Information Science</option>
+                <option value="Department Of Physical Education">Department Of Physical Education</option>
+                <option value="Department Of Civil Engineering">Department Of Civil Engineering</option>
+                <option value="Department Of Computer Science and Engineering">Department Of Computer Science and Engineering</option>
+                <option value="Department Of Electronics & Communication Engineering">Department Of Electronics & Communication Engineering</option>
+                <option value="Department Of Mechanical Engineering">Department Of Mechanical Engineering</option>
+                <option value="Yadavindra Department of Engineering, Talwandi Sabo">Yadavindra Department of Engineering, Talwandi Sabo</option>
+                <option value="Department Of Pharmaceutical Sciences And Drug Research">Department Of Pharmaceutical Sciences And Drug Research</option>
+                <option value="Department Of Physiotherapy">Department Of Physiotherapy</option>
+                <option value="Department Of Sports Science">Department Of Sports Science</option>
+                <option value="Department Of Chemistry">Department Of Chemistry</option>
+                <option value="Department Of Forensic Science">Department Of Forensic Science</option>
+                <option value="Department Of Geography">Department Of Geography</option>
+                <option value="Department Of Mathematics">Department Of Mathematics</option>
+                <option value="Department Of Physics">Department Of Physics</option>
+                <option value="Department Of Statistics">Department Of Statistics</option>
+                <option value="Biological Sciences">Biological Sciences</option>
+                <option value="Languages">Languages</option>
+                <option value="Mathematical and Computational Sciences">Mathematical and Computational Sciences</option>
+                <option value="Physical and Chemical Sciences">Physical and Chemical Sciences</option>
+                <option value="Performing and Visual Arts">Performing and Visual Arts</option>
+                <option value="Social Sciences">Social Sciences</option>
+                <option value="Centre For Restoration Of Ecosystem Of Punjab (CRESP)">Centre For Restoration Of Ecosystem Of Punjab (CRESP)</option>
+                <option value="IAS Training Centre">IAS Training Centre</option>
+                <option value="UGC - Malaviya Mission Teacher Training Centre">UGC - Malaviya Mission Teacher Training Centre</option>
+                <option value="Unnat Bharat Abhiyan">Unnat Bharat Abhiyan</option>
+            </select>
+        </div>
+
+       
+
+        <div class="submit_button">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+
+     
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <!-- Services -->
+        <div class="col-sm-6 col-md-3">
+          <h5 class="text-white">Services</h5>
+          <ul class="list-unstyled">
+            <li><a href="{% url 'patent_register' %}" class="footer-link">Patents</a></li>
+            <li><a href="{% url 'phd_awarded' %}" class="footer-link">Ph.D's</a></li>
+            <li><a href="{% url 'research_publication' %}" class="footer-link">Research Papers</a></li>
+            <li><a href="{% url 'awards' %}" class="footer-link">Awards</a></li>
+            <li><a href="{% url 'books' %}" class="footer-link">Books Published</a></li>
+            <li><a href="{% url 'conference' %}" class="footer-link">Conferences</a></li>
+          </ul>
+        </div>
+
+        <!-- About -->
+        <div class="col-sm-6 col-md-3">
+          <h5 class="text-white">About</h5>
+          <p>A forum for uploading the data for NAAC.</p>
+        </div>
+
+        <!-- Developer -->
+        <div class="col-md-3">
+          <h5 class="text-white">Designed & Developed By</h5>
+          <p><strong class="text-primary">Hitashu</strong></p>
+          <p>Email: <a href="mailto:hitashuh@gmail.com" class="footer-link">hitashuh@gmail.com</a></p>
+          <p>LinkedIn: <a href="https://www.linkedin.com/in/hitashu-585357354" class="footer-link">View Profile</a></p>
+        </div>
+
+        <!-- Guidance -->
+        <div class="col-md-3">
+          <h5 class="text-white">Under the Guidance of</h5>
+          <p class="text-primary mb-1">Dr. Gaurav Gupta</p>
+          <p class="text-primary mb-1">Dr. Gurjit Singh Bhathal</p>
+          <p class="text-primary mb-1">Dr. Brahmaleen K. Sidhu</p>
+          <p class="text-white mt-2">Department of C.S.E</p>
+        </div>
+      </div>
+      <hr style="border-color: #444;">
+      <p class="text-center mb-0">&copy; 2025 Department of CSE, Punjabi University, Patiala</p>
+    </div>
+  </footer>
+</body>
+</html>

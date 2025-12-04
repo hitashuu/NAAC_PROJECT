@@ -1,0 +1,133 @@
+{% extends 'website/layout.html' %}
+
+{% block body %}
+<style>
+    .form_div{
+            padding: 10px 10px;
+            box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+        }
+    
+</style>
+
+    <div class="form_div">
+        {% if edit_award %}
+        <form action="{% url 'edit_award' edit_award.id %}" method="post">
+            {% csrf_token%}
+        <h1> Edit Award Published/Awarded</h1>
+        <hr>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="details">
+                    
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Name of the Activity</label>
+                        <input type="text" class="form-control" required name="activity" placeholder="Enter the category awarded for" value="{{edit_award.activity}}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Name of the Awardee</label>
+                        <input type="text" class="form-control" required name="awardee_name" placeholder="Name of the Awardee" value="{{edit_award.awardee}}">
+                    </div>
+
+
+                  
+                   
+                        
+                        
+                        
+                        
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Level</label>
+                        <select name="level" id="" class="form-control">
+                            <option value="National">National</option>
+                            <option value="InterNational">InterNational</option>
+                        </select>
+                        {{edit_award.level}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="details">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Name of the Award/recognition</label>
+                        <textarea type="text" class="form-control" required name="award_name" placeholder="Enter the Name of the Award" rows="2">{{edit_award.award_name}}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Date of Award</label>
+                        <input type="date" class="form-control" required name="date_award" >
+                    </div>
+
+                    
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Name of the Awarding government/government recognised bodies</label>
+                        <textarea type="text" class="form-control" required name="authority_name" placeholder="Enter the Awarding Institution" rows="3">{{edit_award.authority_name}}</textarea>
+                    </div>
+                </div>
+            </div>    
+        </div>
+            <div class="submit_button"  style="margin-top: 3%;padding: 3%;">
+                <center><button type="submit" class="btn btn-primary">Submit</button></center>
+            </div>
+        </form>
+        
+        {% else %}
+        <form action="{% url 'awards'%}" method="post">
+            {% csrf_token%}
+        <h1>Awards Recieved</h1>
+        <hr>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="details">
+                   
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Name of the Activity</label>
+                        <input type="text" class="form-control" required name="activity" placeholder="Enter the category awarded for">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Name of the awardee</label>
+                        <input type="text" class="form-control" required name="awardee_name" placeholder="Name of the awardee">
+                    </div>
+                   
+                    
+                        
+                       
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Level</label>
+                        <select name="level" id="" class="form-control">
+                            <option value="National">National</option>
+                            <option value="InterNational">InterNational</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="details">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Name of the Award/recognition</label>
+                        <textarea type="text" class="form-control" required name="award_name" placeholder="Enter the Name of the Award" rows="2"></textarea>
+                    </div>
+
+                    
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Date of Award</label>
+                        <input type="date" class="form-control" required name="date_award" >
+                    </div>
+
+                    
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Name of the Awarding government/government recognised bodies</label>
+                        <textarea type="text" class="form-control" required name="authority_name" placeholder="Enter the Awarding Institution" rows="3"></textarea>
+                    </div>
+                </div>
+            </div>    
+        </div>
+            <div class="submit_button"  style="margin-top: 3%;padding: 3%;">
+                <center><button type="submit" class="btn btn-primary">Submit</button></center>
+            </div>
+        </form>
+        {% endif %}
+    </div>
+
+{% endblock %}

@@ -1,0 +1,524 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>index</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'website/styles.css' %}">
+    <style>
+      :root{
+        --percent: {{score}}%
+          }
+
+        .options{
+            padding: 10%;
+        }
+        .details_list li{
+            list-style-type: none;
+        }
+        .brand{
+          padding: 15px;
+        }
+        .container-fluid{
+          padding: 2%; 
+        }
+        .welcome{
+          border: 1px solid #ccc!important;border-radius: 16px;
+          width: auto;
+          padding: 5%;
+        }
+        .welcome2{
+          border: 1px solid #ccc!important;border-radius: 16px;
+          height: auto;
+          padding: 20px;
+        }
+        .content_stats{
+          margin-top: 2%;
+          border: 1px solid #ccc!important;border-radius: 16px;
+          height: auto;
+          padding: 20px;
+        }
+        .card{
+          border: none;
+          box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+          transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
+        }
+        .card:hover{
+          transform: scale(1.05);
+        }
+        .profile_card{
+          border: 1px solid #ccc!important;border-radius: 10px;
+          height: 100px;
+          width: 100%;
+        }
+        .profile_card_1{
+          border: 1px solid #ccc!important;border-radius: 10px;
+          height: 50px;
+          width: 100%;
+        }
+
+        
+          .footer-link {
+              color: #b0b0b0;
+              text-decoration: none;
+              transition: color 0.3s ease-in-out;
+          }
+        
+          .footer-link:hover {
+              color: #0f83ff;
+              text-decoration: underline;
+          }
+        
+        
+    </style>
+    <script>
+      function ShowProfile() {
+        var x = document.getElementById("profile_drop_div");
+        
+        if (x.style.display === "none") {
+          x.style.display = "block";
+        } else {
+          x.style.display = "none";
+        }
+      }
+      
+      function Confirm(){
+        alert("Are you sure you want to change your password")
+      }
+
+    </script>
+    
+</head>
+<body>
+    
+      
+     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#282d32; padding: px 20px; height:80px;">
+    <div class="container-fluid">
+        <!-- Brand -->
+        <a class="navbar-brand" href="#" style="color: #ffffff; font-size: 2rem;">NAAC</a>
+
+        <!-- Toggler for Mobile -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navbar content -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- Left side: Nav links -->
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'index' %}" style="color: white; font-weight: 500;font-size: 2rem;">Home</a>
+                </li>
+            </ul>
+
+            <!-- Right side: Logout Button -->
+            <div class="d-flex">
+                <a href="{% url 'logout_view' %}" class="btn btn-primary ml-lg-2 mt-2 mt-lg-0"
+                   style="color: white; font-size: 0.9rem; padding: 6px 14px; border-radius: 5px;">
+                   Logout
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+    
+    
+    <div class="container-fluid">
+        <div class="row">
+
+          
+          <div class="col-md-3" style="height: auto;padding-left: 3%;padding-right: 3%;">
+            <div class="welcome">
+                <div class="info">
+                <h1 style="font-family: Helvetica Neue;">Dashboard</h1>
+                <hr>
+                <div style=" margin:0px auto 0px auto;">
+
+                  {% if request.session.is_admin %}
+                  <h4 style="text-align:left;">Admin</h4>
+                  <hr>
+                  <h3 style="color:red"> Manage HODs</h3>
+                   <a style="text-align:left;font-size:20px;" href="{% url 'add_head' %}">Click Here!</a>
+                 
+                  <hr>
+                  <h3 style="color:red"> Update Admin Info</h3>
+                   <a style="text-align:left;font-size:20px;" href="{% url 'update_email_admin' %}">Click Here!</a>
+                 
+                  
+                  <hr>
+                
+                
+
+
+                  {% elif request.session.is_head %}
+                  <h4 style="text-align:left;"><strong style="color:red;">Head of dept:</strong><h4>
+                  <p style="text-align:left;">{{request.session.head_department}}<p>
+
+                  {% else %}
+                  <p>Employee ID : {{request.user.username}}</p>
+                  <p>Name : {{current_user.employee_name}}</p>
+
+                  {% endif %}
+                  
+                  
+                </div>
+              </div>
+
+             
+              {% if not request.session.is_admin and not request.session.is_head %}
+
+
+              <hr>
+              <div class="info">
+                <h3 style="font-family: Helvetica Neue;">Profile</h3>
+                <div class="progress_bar" style="padding: 5%;">
+                  <p> {{score}} % Profile Completed</p>
+                  <div class="progress" style="height: 10px;">
+                    <div class="progress-bar" role="progressbar" style="width: var(--percent)" aria-valuenow="{{score}}" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+                {% if score == 100 %}
+                <button class="btn btn-primary" id="profile" onclick="ShowProfile()" style="padding-bottom: 2%;">View Profile</button>
+                <div class="card_profile_div" style="padding: 2%;display: none;margin-top: 1%;" id="profile_drop_div" >
+                  <div class="row">
+                    <div class="col-md-6">
+                      {% if 'personal' in empty_list %}
+                      <div class="profile_card_1" style="display: flex;align-items: center;justify-content: center;">
+                        <center><a style="color:red;" href="{% url 'personal_details'%}">Personal</a></center>
+                      </div>
+                      {% else %}
+                      <div class="profile_card_1" style="display: flex;align-items: center;justify-content: center;">
+                        <center><a style="color: green;" href="{% url 'personal_details'%}">Personal</a></center>
+                      </div>
+                      {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                      {% if 'work' in empty_list %}
+                      <div class="profile_card_1" style="display: flex;align-items: center;justify-content: center;">
+                        <center><a style="color:red;" href="{% url 'work_details'%}">Work</a></center>
+                      </div>
+                      {% else %}
+                      <div class="profile_card_1" style="display: flex;align-items: center;justify-content: center;">
+                        <center><a style="color:green;" href="{% url 'work_details'%}">Work</a></center>
+                      </div>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <div class="row" style="margin-top: 4%;">
+                    <div class="col-md-6">
+                      {% if 'contact' in empty_list %}
+                      <div class="profile_card_1" style="display: flex;align-items: center;justify-content: center;">
+                        <center><a style="color:red;" href="{% url 'contact_details'%}">Contact</a></center>
+                      </div>
+                      {% else %}
+                      <div class="profile_card_1" style="display: flex;align-items: center;justify-content: center;">
+                        <center><a style="color:green;" href="{% url 'contact_details'%}">Contact</a></center>
+                      </div>
+                      {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                      {% if 'bank' in empty_list %}
+                      <div class="profile_card_1" style="display: flex;align-items: center;justify-content: center;">
+                        <center><a style="color:red;" href="{% url 'bank_details'%}">Bank</a></center>
+                      </div>
+                      {% else %}
+                      <div class="profile_card_1" style="display: flex;align-items: center;justify-content: center;">
+                        <center><a style="color:green;" href="{% url 'bank_details'%}">Bank</a></center>
+                      </div>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <div class="row" style="margin-top: 4%;">
+                    <div class="col-md-6">
+                      {% if 'experience' in empty_list %}
+                      <div class="profile_card_1" style="display: flex;align-items: center;justify-content: center;">
+                        <center><a style="color:red;" href="{% url 'experience_details'%}">Experience</a></center>
+                      </div>
+                      {% else %}
+                      <div class="profile_card_1" style="display: flex;align-items: center;justify-content: center;">
+                        <center><a style="color:green;" href="{% url 'experience_details'%}">Experience</a></center>
+                      </div>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+                {% else %}
+                <div class="card_profile_div" style="padding: 2%;">
+                  <div class="row">
+                    <div class="col-md-6">
+                      {% if 'personal' in empty_list %}
+                      <div class="profile_card_1" style="display: flex;align-items: center;justify-content: center;">
+                        <center><a style="color:red;" href="{% url 'personal_details'%}">Personal</a></center>
+                      </div>
+                      {% else %}
+                      <div class="profile_card_1" style="display: flex;align-items: center;justify-content: center;">
+                        <center><a style="color: green;" href="{% url 'personal_details'%}">Personal</a></center>
+                      </div>
+                      {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                      {% if 'work' in empty_list %}
+                      <div class="profile_card_1" style="display: flex;align-items: center;justify-content: center;">
+                        <center><a style="color:red;" href="{% url 'work_details'%}">Work</a></center>
+                      </div>
+                      {% else %}
+                      <div class="profile_card_1" style="display: flex;align-items: center;justify-content: center;">
+                        <center><a style="color:green;" href="{% url 'work_details'%}">Work</a></center>
+                      </div>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <div class="row" style="margin-top: 4%;">
+                    <div class="col-md-6">
+                      {% if 'contact' in empty_list %}
+                      <div class="profile_card_1" style="display: flex;align-items: center;justify-content: center;">
+                        <center><a style="color:red;" href="{% url 'contact_details'%}">Contact</a></center>
+                      </div>
+                      {% else %}
+                      <div class="profile_card_1" style="display: flex;align-items: center;justify-content: center;">
+                        <center><a style="color:green;" href="{% url 'contact_details'%}">Contact</a></center>
+                      </div>
+                      {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                      {% if 'bank' in empty_list %}
+                      <div class="profile_card_1" style="display: flex;align-items: center;justify-content: center;">
+                        <center><a style="color:red;" href="{% url 'bank_details'%}">Bank</a></center>
+                      </div>
+                      {% else %}
+                      <div class="profile_card_1" style="display: flex;align-items: center;justify-content: center;">
+                        <center><a style="color:green;" href="{% url 'bank_details'%}">Bank</a></center>
+                      </div>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <div class="row" style="margin-top: 4%;">
+                    <div class="col-md-6">
+                      {% if 'experience' in empty_list %}
+                      <div class="profile_card_1" style="display: flex;align-items: center;justify-content: center;">
+                        <center><a style="color:red;" href="{% url 'experience_details'%}">Experience</a></center>
+                      </div>
+                      {% else %}
+                      <div class="profile_card_1" style="display: flex;align-items: center;justify-content: center;">
+                        <center><a style="color:green;" href="{% url 'experience_details'%}">Experience</a></center>
+                      </div>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+                {% endif %}
+                 <hr>
+                  {% comment %} <ul class="details_list" id="details_list" style="display: none;">
+                    <li>hii</li>
+                      <li><a href="{% url 'personal_details'%}" class="btn btn-primary">Personal Details</a></li>
+                      <li><a href="{% url 'work_details'%}" class="btn btn-primary">Work Details</a></li>
+                      <li><a href="{% url 'contact_details'%}" class="btn btn-primary">Contact Details</a></li>
+                      <li><a href="{% url 'bank_details'%}" class="btn btn-primary">Bank Details</a></li>
+                      <li><a href="{% url 'experience_details'%}" class="btn btn-primary">Experience Details</a></li>
+                  </ul>  {% endcomment %}
+              </div>
+              <div class="info">
+                <h3 style="font-family: Helvetica Neue;">Uploads</h3>
+                <div class="card_profile_div" style="padding: 2%;">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="profile_card" style="display: flex;align-items: center;justify-content: center;">
+                        <a href="{% url 'patent_register'%}" >Patent</a></li>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="profile_card" style="display: flex;align-items: center;justify-content: center;">
+                        <a href="{% url 'phd_awarded'%}" >Ph.D</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row" style="margin-top: 4%;">
+                    <div class="col-md-6">
+                      <div class="profile_card" style="display: flex;align-items: center;justify-content: center;">
+                        <center><a href="{% url 'research_publication'%}" >Research Publication</a></center>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="profile_card" style="display: flex;align-items: center;justify-content: center;">
+                        <a href="{% url 'awards'%}" >Award</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row" style="margin-top: 4%;">
+                    <div class="col-md-6">
+                      <div class="profile_card" style="display: flex;align-items: center;justify-content: center;">
+                        <a href="{% url 'books'%}" >Books</a>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="profile_card" style="display: flex;align-items: center;justify-content: center;">
+                        <center><a href="{% url 'conference'%}">Book Chapter / Conference Proceedings</a></center>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-md-9">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="container-fluid p-0">
+                      <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="True">&times;</span>
+                        </button>
+                        {{ message }}
+                      </div>
+                    </div>
+                  {% endfor %}
+            {% endif %}
+            {% block body %}
+            <!--
+              Content Inside
+            -->
+            {% endblock %}
+          </div>
+        </div>
+      </div>
+      {% comment %} <div class="footer-dark" style="margin-top: 5%;"> {% endcomment %}
+        {% comment %} <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 item">
+                        <h3>Services</h3>
+                        <ul>
+                            <li><a href="{% url 'patent_register'%}">Patents</a></li>
+                            <li><a href="{% url 'phd_awarded'%}">Ph.D's</a></li>
+                            <li><a href="{% url 'research_publication'%}">Research Papers</a></li>
+                            <li><a href="{% url 'awards'%}">Awards</a></li>
+                            <li><a href="{% url 'books'%}">Books Published</a></li>
+                            <li><a href="{% url 'conference'%}">Book Chapters and Conference Proceedings</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6 col-md-3 item">
+                        <h3>About</h3>
+                        <ul>
+                            <li>A forum for uploading the data for NAAC</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="col-md-3 item text" >
+                        <h3>Designed and Developed By</h3>
+                        <div>
+                          <h5>Hitashu</h5>
+                            <p>Gmail : <a href="mailto: adityapal0807@gmail.com" ma>adityapal0807@gmail.com</a></p>
+                            <p>LinkedIn : <a href="https://www.linkedin.com/in/aditya-pal-singh-948153205/">linkedin.com/in/aditya-pal-singh-948153205</a></p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 item text" >
+                      <h3>Under the Guidance of</h3>
+                      <div style="padding:2%">
+                        <div class="abc">
+                          <h6>Dr. Gaurav Gupta</h5>
+                            <a href="https://punjabiuniversity.ac.in/Departments/Profiles/18/Profile_P18XEF973.pdf">info</a>
+                        </div>
+
+                        <div class="abc" style="margin-top: 2%;">
+                          <h6>Dr. Gurjit Singh Bhathal (CSE)</h5>
+                            <a href="https://punjabiuniversity.ac.in/Departments/Profiles/18/Profile_P18X750BF.pdf">info</a>
+                        </div>
+                        <div class="abc" style="margin-top: 2%;">
+                          <h6>Dr. Brahmaleen K. Sidhu (CSE)</h5>
+                             <a href="https://punjabiuniversity.ac.in/Departments/Profiles/18/Profile_P18XECF31.pdf">info</a> 
+                        </div>
+                        By.
+                        
+                        <h5>Department of C.S.E</h5>
+                        
+                      </div>
+                      
+                  </div>
+                 </div>
+                <p class="copyright"><b>Department of CSE, Punjabi University, Patiala © 2023</b></p>
+            </div>
+        </footer>
+      </div>
+</body>
+</html> {% endcomment %}
+
+<footer style="background-color: #282d32; padding: 50px 0; font-family: Arial, sans-serif;">
+  <div class="container">
+      <div class="row">
+          <!-- Services Section -->
+          <div class="col-sm-6 col-md-3 item">
+              <h3 style="color: white; font-weight: bold; font-size: 20px; margin-bottom: 15px;">Services</h3>
+              <ul style="list-style: none; padding: 0; font-size: 16px;">
+                  <li><a href="{% url 'patent_register' %}" class="footer-link">Patents</a></li>
+                  <li><a href="{% url 'phd_awarded' %}" class="footer-link">Ph.D's</a></li>
+                  <li><a href="{% url 'research_publication' %}" class="footer-link">Research Papers</a></li>
+                  <li><a href="{% url 'awards' %}" class="footer-link">Awards</a></li>
+                  <li><a href="{% url 'books' %}" class="footer-link">Books Published</a></li>
+                  <li><a href="{% url 'conference' %}" class="footer-link">Book Chapters & Conferences</a></li>
+              </ul>
+          </div>
+
+          <!-- About Section -->
+          <div class="col-sm-6 col-md-3 item">
+              <h3 style="color: white; font-weight: bold; font-size: 20px; margin-bottom: 15px;">About</h3>
+              <p style="color: #b0b0b0; font-size: 16px;">A forum for uploading the data for NAAC.</p>
+          </div>
+
+          <!-- Designed By Section -->
+          <div class="col-md-3 item text">
+              <h3 style="color: white; font-weight: bold; font-size: 20px; margin-bottom: 15px;">Designed & Developed By</h3>
+              <h5 style="color: #0f83ff;font-size: 17px; margin-bottom: 5px;">Hitashu</h5>
+              <p style="color: #b0b0b0; font-size: 16px; margin-bottom: 5px;">
+                  Gmail: <a href="mailto:hitashuh@gmail.com" class="footer-link">hitashuh@gmail.com</a>
+              </p>
+              <p style="color: #b0b0b0; font-size: 16px;">
+                  LinkedIn: <a href="https://www.linkedin.com/in/hitashu-585357354" class="footer-link">View Profile</a>
+              </p>
+          </div>
+
+          <!-- Guidance Section -->
+          <div class="col-md-3 item text">
+              <h3 style="color: white; font-weight: bold; font-size: 20px; margin-bottom: 15px;">Under the Guidance of</h3>
+              <div>
+                  <div class="abc" style="margin-bottom: 12px;">
+                      <h6 style="color:#0f83ff ; font-size: 16px; margin-bottom: 5px;">Dr. Gaurav Gupta</h6>
+                      
+                  </div>
+
+                  <div class="abc" style="margin-bottom: 12px;">
+                      <h6 style="color: #0f83ff; font-size: 16px; margin-bottom: 5px;">Dr. Gurjit Singh Bhathal </h6>
+ 
+                  </div>
+
+                  <div class="abc" style="margin-bottom: 12px;">
+                      <h6 style="color: #0f83ff; font-size: 16px; margin-bottom: 5px;">Dr. Brahmaleen K. Sidhu </h6>
+
+                  </div>
+                  
+                  <h5 style="color: white; font-size: 17px; margin-top: 10px;">Department of C.S.E</h5>
+              </div>
+          </div>
+      </div>
+
+      <hr style="border-color: #444; margin: 30px 0;">
+
+      <!-- Copyright Section -->
+      <p class="copyright text-center" style="color: #b0b0b0; font-size: 15px;">
+          <b>Department of CSE, Punjabi University, Patiala © 2025</b>
+      </p>
+  </div>
+</footer>
+</body>
+</html>
+
+

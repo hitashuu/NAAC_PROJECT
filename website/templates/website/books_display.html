@@ -1,0 +1,140 @@
+{% extends 'website/layout.html' %}
+
+{% block body %}
+
+<script>
+    function DeleteAlert() {
+      var myText = "Are you sure you want to Delete this item";
+      alert (myText);
+    }
+    </script>
+
+<div class="container-fluid">
+    <h2>Books</h2>
+    <form class="form-inline my-2 my-lg-0" style="float: right;" method="post" action="{% url 'books_display'%}">
+        {% csrf_token %}
+        <label for="form-control mr-sm-2" class="form-label mr-sm-2">Filter By - </label>
+        <select class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="field">
+            <option value="" selected disabled>Select a field</option>
+            <option value="authors">Author Name(s)</option>
+            <option value="title">Title</option>
+            <option value="publisher">Publisher</option>
+            <option value="isbn">ISBN</option>
+            <option value="year_published">Year Published</option>
+            <option value="affiliating_institute">Affiliating Institution</option>
+            <option value="level">Level</option>
+
+        </select>
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    <p>List of all the Books Published</p>                                                                                      
+    <div class="table-responsive"> 
+        {% if filter_field %}
+        {% if message %}
+            <p>No Records Available</p>
+            <a href="{% url 'books_display'%}">Back to all Records</a>
+        {% else %} 
+        <h4>Filtered</h4>  
+        <div style="padding:2%;float: right;">
+            <a class="btn btn-outline-success" href="{% url 'books_display'%}">Remove Filter</a>
+        </div>
+        <p>Showing filtered results for <b>{{filter_field}}</b> matching with <b>{{filter_data}}</b></p>  
+        
+        <table class="table table-hover" style="margin-top: 2%;">
+            <thead>
+                <tr>
+                    <th>Sr.No</th>
+                    {% if is_admin or is_head %}
+                        <th>Registered BY Employee Name</th>
+                    {% endif %}
+                    <th>Authors</th>
+                    <th>Title</th>
+                    <th>Publisher</th>
+                    <th>ISBN</th>
+                    <th>Year Published</th>
+                    <th>Affiliating Institute</th>
+                    <th>Level</th>
+                    {% if not is_admin and not is_head %}
+                        <th>Edit or Delete</th>
+                    {% endif %}
+                </tr>
+                </thead>
+                <tbody>
+                    {% for i,book in filter_books_list %}
+                        <tr>
+                            <td>{{i}}</td>
+                            {% if is_admin or is_head %}
+                                <td>{{book.user.employee_name}}</td>
+                            {% endif %}
+                            <td>{{book.authors}}</td>
+                            <td>{{book.title}}</td>
+                            <td>{{book.publisher}}</td>
+                            <td>{{book.isbn}}</td>
+                            <td>{{book.year_published}}</td>
+                            <td>{{book.affiliating_institute}}</td>
+                            <td>{{book.level}}</td>
+                           {% if not is_admin and not is_head %}
+                            <td><a href="{% url 'edit_book' book.id %}">Edit</a>/<a href="{% url 'delete_book' book.id %}" onclick="DeleteAlert()">Delete</a></td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+        </table>
+       
+            <form action="{% url 'books_download'%}">
+                <button type="submit" name="books" class="btn btn-outline-success">Download Csv</button>
+            </form>
+    
+         {% endif %}
+         {% else %}
+        <table class="table table-hover" style="margin-top: 2%;">
+            <thead>
+                <tr>
+                    <th>Sr.No</th>
+                    {% if is_admin or is_head %}
+                        <th>Registered BY Employee Name</th>
+                    {% endif %}
+                    <th>Authors</th>
+                    <th>Title</th>
+                    <th>Publisher</th>
+                    <th>ISBN</th>
+                    <th>Year Published</th>
+                    <th>Affiliating Institute</th>
+                    <th>Level</th>
+                   {% if not is_admin and not is_head %}
+                        <th>Edit or Delete</th>
+                    {% endif %}
+                </tr>
+                </thead>
+                <tbody>
+                    {% for i,book in books_list %}
+                        <tr>
+                            <td>{{i}}</td>
+                            {% if is_admin or is_head %}
+                                <td>{{book.user.employee_name}}</td>
+                            {% endif %}
+                            <td>{{book.authors}}</td>
+                            <td>{{book.title}}</td>
+                            <td>{{book.publisher}}</td>
+                            <td>{{book.isbn}}</td>
+                            <td>{{book.year_published}}</td>
+                            <td>{{book.affiliating_institute}}</td>
+                            <td>{{book.level}}</td>
+                            {% if not is_admin and not is_head %}
+                            <td><a href="{% url 'edit_book' book.id %}">Edit</a>/<a href="{% url 'delete_book' book.id %}" onclick="DeleteAlert()">Delete</a></td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+        </table>
+       
+            <form action="{% url 'books_download'%}">
+                <button type="submit" name="books" class="btn btn-outline-success">Download Csv</button>
+            </form>
+           
+            {% endif %}
+    </div>
+</div>
+
+{% endblock%}

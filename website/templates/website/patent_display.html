@@ -1,0 +1,169 @@
+{% extends 'website/layout.html' %}
+
+{% block body %}
+
+<script>
+    function DeleteAlert() {
+      var myText = "Are you sure you want to Delete this item";
+      alert (myText);
+    }
+    </script>
+
+<div class="container-fluid"> 
+     
+  
+    <h2>Patents</h2>
+    <form class="form-inline my-2 my-lg-0" style="float: right;" method="post" action="{% url 'patent_display'%}">
+        {% csrf_token %}
+        <label for="form-control mr-sm-2" class="form-label mr-sm-2">Filter By - </label>
+        <select class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="field">
+            <option value="" selected disabled>Select a field</option>
+            <option value="author_name">Author Name(s)</option>
+            <option value="patent_number">Patent Number</option>
+            <option value="patent_title">Patent Title</option>
+            <option value="category">Category</option>
+            <option value="patent_year">Patent Year</option>
+            <option value="level">Level</option>
+            <option value="patent_type">Patent_type</option>
+            <option value="date_published">Published date</option>
+            <option value="date_award">Award/Grant date</option>
+            
+            
+            
+        </select>
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="filter">Search</button>
+      </form>
+      
+    <p>List of all the Patents Either Applied or Rewarded</p>                                                                                      
+    <div class="table-responsive">  
+
+        {% if filter_field %}
+            {% if message %}
+                <p>No Records Available</p>
+                <a href="{% url 'patent_display'%}">Back to all Records</a>
+            {% else %}
+        <h4>Filtered</h4>  
+        <div style="padding:2%;float: right;">
+            <a class="btn btn-outline-success" href="{% url 'patent_display'%}">Remove Filter</a>
+        </div>
+        <p>Showing filtered results for <b>{{filter_field}}</b> matching with <b>{{filter_data}}</b></p>
+        <table class="table table-hover" style="margin-top: 2%;">
+            <thead>
+                <tr>
+                    <th>Sr.No</th>
+                    {% if is_admin or is_head %}
+                        <th>Registered BY Employee Name</th>
+                    {% endif %}
+                    <th>Author Name</th>
+                    <th>Patent Number</th>
+                    <th>Patent Title</th>
+                    <th>Category</th>
+                    <th>Patent Year</th>
+                    <th>Level</th>
+                    <th>Patent_type</th>
+                    <th>Published date</th>
+                    <th>Award date</th>
+                    {% if not is_admin and not is_head %}
+                        <th>Edit or Delete</th>
+                    {% endif %}
+                </tr>
+                </thead>
+                <tbody>
+                    {% for a,f_patent in filter_patents_list %}
+                        <tr>
+                            <td>{{a}}</td>
+                            {% if user.employee_code == 'admin' %}
+                                <td>{{f_patent.user.employee_name}}</td>
+                            {% endif %}
+                            <td>{{f_patent.author_name}}</td>
+                            <td>{{f_patent.patent_number}}</td>
+                            <td>{{f_patent.patent_title}}</td>
+                            <td>{{f_patent.category}}</td>
+                            <td>{{f_patent.patent_year}}</td>
+                            <td>{{f_patent.level}}</td> 
+                            <td>{{f_patent.patent_type}}</td> 
+                            <td>{{f_patent.date_published}}</td> 
+                            <td>{{f_patent.date_award}}</td> 
+
+                            {% if current_user.employee_code != 'admin' %}
+                            <td><a href="{% url 'edit_patent' f_patent.id %}">Edit</a>/<a href="{% url 'delete_patent' f_patent.id %}" onclick="DeleteAlert()">Delete</a></td>
+                            {% endif %}
+     
+                        </tr>
+                    {% endfor %}
+                </tbody>
+        </table>
+            
+         <form action="{% url 'patent_download'%}"> 
+            <button href="#" type="submit" name="filter_patent" class="btn btn-outline-success">Download Csv</button>
+         </form>
+       
+           
+        {% endif %}
+
+        {% comment %} GET request {% endcomment %}
+        {% else %}  
+          
+        <table class="table table-hover" style="margin-top: 2%;">
+            <thead>
+                <tr>
+                    <th>Sr.No</th>
+                    {% if is_admin or is_head %}
+                        <th>Registered BY Employee Name</th>
+                    {% endif %}
+                    <th>Author Name</th>
+                    <th>Patent Number</th>
+                    <th>Patent Title</th>
+                    <th>Category</th>
+                    <th>Patent Year</th>
+                    <th>Level</th>
+                    <th>Patent_type</th>
+                    <th>Published date</th>
+                    <th>Award date</th>
+                    {% if not is_admin and not is_head %}
+                        <th>Edit or Delete</th>
+                    {% endif %}
+                    
+                    
+                </tr>
+                </thead>
+                <tbody>
+                    {% for a,patent in patents_list %}
+                        <tr>
+                            <td>{{a}}</td>
+                            {% if is_admin or is_head %}
+                                <td>{{patent.user.employee_name}}</td>
+                            {% endif %}
+                            <td>{{patent.author_name}}</td>
+                            <td>{{patent.patent_number}}</td>
+                            <td>{{patent.patent_title}}</td>
+                            <td>{{patent.category}}</td>
+                            <td>{{patent.patent_year}}</td>
+                            <td>{{patent.level}}</td>
+                            <td>{{patent.patent_type}}</td>
+                            <td>{{patent.date_published}}</td> 
+                            <td>{{patent.date_award}}</td> 
+                            {% if not is_admin and not is_head %}
+                                <td><a href="{% url 'edit_patent' patent.id %}">Edit</a>/<a href="{% url 'delete_patent' patent.id %}" onclick="DeleteAlert()">Delete</a></td>
+                            {% endif %}
+
+                        </tr>
+                    {% endfor %}
+                </tbody>
+        </table>
+        
+       
+        <form action="{% url 'patent_download'%}"> 
+            <button href="#" type="submit" name="patent" class="btn btn-outline-success">Download Csv</button>
+         </form>
+        
+         
+
+        
+        
+{% endif %}
+</div>
+</div>
+
+{% endblock %}

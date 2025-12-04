@@ -1,0 +1,168 @@
+{% extends 'website/layout.html' %}
+
+{% block body %}
+<script type="text/javascript">
+    function Change() {
+        var sci = document.getElementById("field");
+        var impact_factor = document.getElementById("data");
+        if (sci.value === 'date'){
+            document.getElementById('data').type='date';
+        }
+        else{
+            document.getElementById('data').type='text';
+        }
+    }
+
+    
+    function DeleteAlert() {
+      var myText = "Are you sure you want to Delete this item";
+      alert (myText);
+    }
+    
+</script>
+
+<script>
+    function DeleteAlert() {
+      var myText = "Are you sure you want to Delete this item";
+      alert (myText);
+    }
+    </script>
+<div class="container-fluid">
+    <h2 style="margin-bottom: 2%;">Book Chapter / Conference Proceedings/ Paper Presented</h2>
+    <form class="form-inline my-2 my-lg-0" style="float: right;" method="post" action="{% url 'conference_display'%}">
+        {% csrf_token %}
+        <label for="form-control mr-sm-2" class="form-label mr-sm-2">Filter By - </label>
+        <select class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="field" id="field" onchange="Change()">
+            <option value="" selected disabled>Select a field</option>
+            <option value="authors">Author Name(s)</option>
+            <option value="category">Category</option>
+            <option value="title_chap_paper">Title of Chapter/Paper</option>
+            <option value="title_book_conf">Title of Book/Conference</option>
+            <option value="type_conf">Conference Type</option>
+            <option value="date">Date</option>
+            <option value="isbn">ISBN</option>
+            <option value="publisher">Publisher</option>
+        </select>
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q" id="data">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    <p>List of all the Book Chapters and Chapter Proceedings.</p>                                                                                      
+    <div class="table-responsive">
+        {% if filter_field %}
+        {% if message %}
+            <p>No Records Available</p>
+            <a href="{% url 'conference_display'%}">Back to all Records</a>
+        {% else %} 
+        <h4>Filtered</h4>  
+        <div style="padding:2%;float: right;">
+            <a class="btn btn-outline-success" href="{% url 'conference_display'%}">Remove Filter</a>
+        </div>
+        <p>Showing filtered results for <b>{{filter_field}}</b> matching with <b>{{filter_data}}</b></p> 
+        
+        <table class="table table-hover" style="margin-top: 2%;">
+            <thead>
+                <tr>
+                    <th>Sr.No</th>
+                    {% if  is_admin or is_head %}
+                        <th>Registered BY Employee Name</th>
+                    {% endif %}
+                    <th>Authors(s)</th>
+                    <th>Category</th>
+                    <th>Title of the Chapter/Paper</th>
+                    <th>Title of the Book/Conference</th>
+                    <th>Conference Type</th>
+                    <th>Date</th>
+                    <th>ISBN</th>
+                    <th>Publisher</th>
+                    <th>PP</th>
+                    {% if not is_admin and not is_head %}
+                        <th>Edit or Delete</th>
+                    {% endif %}
+                </tr>
+                </thead>
+                <tbody>
+                    {% for i,conference in filter_conferences_list%}
+                        <tr>
+                            <td>{{i}}</td>
+                            {% if  is_admin or is_head %}
+                                <td>{{conference.user.employee_name}}</td>
+                            {% endif %}
+                            <td>{{conference.authors}}</td>
+                            <td>{{conference.category}}</td>
+                            <td>{{conference.title_chap_paper}}</td>
+                            <td>{{conference.title_book_conf}}</td>
+                            <td>{{conference.type_conf}}</td>
+                            <td>{{conference.date}}</td>
+                            <td>{{conference.isbn}}</td>
+                            <td>{{conference.publisher}}</td>
+                            <td>{{conference.pp}}</td>
+
+                            {% if not is_admin and not is_head %}
+                            <td><a href="{% url 'edit_conference' conference.id %}">Edit</a>/<a href="{% url 'delete_conference' conference.id %}" onclick="DeleteAlert()">Delete</a></td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+        </table>
+       
+            <form action="{% url 'conference_download'%}">
+                <button type="submit" name="conference" class="btn btn-outline-success">Download Csv</button>
+            </form>
+            
+       {% endif %}
+       {% else %}
+        <table class="table table-hover" style="margin-top: 2%;">
+            <thead>
+                <tr>
+                    <th>Sr.No</th>
+                    {% if  is_admin or is_head %}
+                        <th>Registered BY Employee Name</th>
+                    {% endif %}
+                    <th>Authors(s)</th>
+                    <th>Category</th>
+                    <th>Title of the Chapter/Paper</th>
+                    <th>Title of the Book/Conference</th>
+                    <th>Conference Type</th>
+                    <th>Date</th>
+                    <th>ISBN</th>
+                    <th>Publisher</th>
+                    <th>PP</th>
+                   {% if not is_admin and not is_head %}
+                        <th>Edit or Delete</th>
+                    {% endif %}
+                </tr>
+                </thead>
+                <tbody>
+                    {% for i,conference in conferences_list%}
+                        <tr>
+                            <td>{{i}}</td>
+                            {% if  is_admin or is_head %}
+                                <td>{{conference.user.employee_name}}</td>
+                            {% endif %}
+                            <td>{{conference.authors}}</td>
+                            <td>{{conference.category}}</td>
+                            <td>{{conference.title_chap_paper}}</td>
+                            <td>{{conference.title_book_conf}}</td>
+                            <td>{{conference.type_conf}}</td>
+                            <td>{{conference.date}}</td>
+                            <td>{{conference.isbn}}</td>
+                            <td>{{conference.publisher}}</td>
+                            <td>{{conference.pp}}</td>
+
+                            {% if not is_admin and not is_head %}
+                            <td><a href="{% url 'edit_conference' conference.id %}">Edit</a>/<a href="{% url 'delete_conference' conference.id %}" onclick="DeleteAlert()">Delete</a></td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+        </table>
+       
+            <form action="{% url 'conference_download'%}">
+                <button type="submit" name="conference" class="btn btn-outline-success">Download Csv</button>
+            </form>
+            {% endif %}
+     
+    </div>
+</div>
+
+{% endblock%}

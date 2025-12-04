@@ -1,0 +1,206 @@
+{% extends 'website/layout.html' %}
+
+
+{% block body%}
+<style>
+    .form_div{
+            padding: 10px 10px;
+            box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+        }
+    
+</style>
+<script type="text/javascript">
+    function ShowHideDiv() {
+            var maritial_status = document.getElementById("maritial_status");
+            var spouse_name = document.getElementById("spouse_name");
+            spouse_name.style.display = maritial_status.value == "Married" ? "block" : "none";
+        }
+
+    function show_fill() {
+        var form_fill = document.getElementById("form_fill");
+        var form_show = document.getElementById("form_show");
+
+        form_fill.style.display = "block";
+        form_show.style.display = "None";
+    }
+    
+</script>
+
+
+
+    <!-- 
+        Fill the form(editing)
+    -->
+     <div class="form_div" id="form_fill" style="display: none;">
+        
+        <form action="{% url 'work_details'%}" method="post">
+            {% csrf_token%}
+        <h1>Work Details</h1>
+        <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="details">
+                        {% comment %} <div class="form-group">
+                            <label for="exampleInputEmail1">Designation</label>
+                            <input type="text" class="form-control" placeholder="Enter Designation" name="designation" required value="{{designation}}">
+                        </div> {% endcomment %}
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Designation</label>
+                            <select type="text" class="form-control"name="designation"   required  >
+                                <option value="">--select--</option>
+                                <option value="Assistant Professor">Assistant Professor</option>
+                                <option value="Associate Professor">Associate Professor</option>
+                                <option value="Professor">Professor</option>
+
+                                
+                               
+                            </select>
+                            {{designation}}
+                            
+                        </div> 
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Date Of Joining</label>
+                            <input type="date" class="form-control" placeholder="Enter Date of Joining" name="dob_joining" required value="{{dob_joining}}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="details">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Mode of Recruitment</label>
+                            <select type="text" class="form-control" name="mode_of_recruitment"  required value >
+                                <option value="">--select--</option>
+                                <option value="Regular">Regular</option>
+                                <option value="Adhoc">Adhoc</option>
+                                <option value="Guest">Guest</option>
+                                <option value="Full-time">Full-time</option>
+                               
+                            </select>
+                            {{mode_of_recruitment}}
+
+                        </div> 
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Date Of Retirement</label>
+                            <input type="date" class="form-control" name="dob_retirement" placeholder="Date of Retirement" required value="{{dob_retirement}}">
+                        </div>  
+                    </div>
+                </div>    
+            </div>
+            <div class="submit_button"  style="margin-top: 3%;padding: 3%;">
+                <center><button type="submit" class="btn btn-primary">Submit</button></center>
+            </div>
+        </form>
+    </div> 
+
+    {% if message%}
+    <div class="form_div">
+        <form action="{% url 'work_details'%}" method="post">
+            {% csrf_token%}
+            <h1>Work Details</h1>
+            <hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="details">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Designation</label>
+                                <select type="text" class="form-control"name="designation"  required >
+                                    <option value="">--select--</option>
+                                    <option value="Assistant Professor">Assistant Professor</option>
+                                    <option value="Associate Professor">Associate Professor</option>
+                                    <option value="Professor">Professor</option>
+                                    
+                                   
+                                </select>
+                            </div> 
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Date Of Joining</label>
+                                <input type="date" class="form-control" placeholder="Enter Date of Joining" name="dob_joining" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="details">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Mode of Recruitment</label>
+                                <select type="text" class="form-control" name="mode_of_recruitment"  required >
+                                    <option value="">--select--</option>
+                                    <option value="Regular">Regular</option>
+                                    <option value="Adhoc">Adhoc</option>
+                                    <option value="Guest">Guest</option>
+                                    <option value="Full-time">Full-time</option>
+                                   
+                                </select>
+                            </div> 
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Date Of Retirement</label>
+                                <input type="date" class="form-control" name="dob_retirement" placeholder="Date of Retirement" required>
+                            </div>  
+                        </div>
+                    </div>    
+                </div>
+                <div class="submit_button"  style="margin-top: 3%;padding: 3%;">
+                    <center><button type="submit" class="btn btn-primary">Submit</button></center>
+                </div>
+            </form>
+        </div>
+    {% else %}
+    <div class="form_div" id="form_show">
+        <div style="display: flex;justify-content: space-between;">
+            <h1>Work Details</h1>
+            <div class="button_class" style="padding: 1%;">
+                <button onclick="show_fill()" class="btn btn-primary">Edit</button>
+            </div>
+        </div>
+        <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="details">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Designation</label>
+                            <select type="text" class="form-control" name="designation" disabled>
+                                <option value="">--select--</option>
+                                <option value="Assistant Professor">Assistant Professor</option>
+                                <option value="Associate Professor">Associate Professor</option>
+                                <option value="Professor">Professor</option>
+                                
+                               
+                            </select>
+                            {{designation}}
+                        </div> 
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Date Of Joining</label>
+                            <input type="text" class="form-control" placeholder="Enter Date of Joining" name="dob_joining"  disabled value="{{dob_joining}}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="details">
+                        {% comment %} <div class="form-group">
+                            <label for="exampleInputEmail1">Mode of Recruitment</label>
+                            <input type="text" class="form-control" name="mode_of_recruitment" placeholder="Mode of Recruitment" required disabled value="{{mode_of_recruitment}}">
+                        </div> {% endcomment %}
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Mode of Recruitment</label>
+                            <select type="text" class="form-control" name="mode_of_recruitment"   disabled  >
+                                <option value="">--select--</option>
+                                <option value="Regular">Regular</option>
+                                <option value="Adhoc">Adhoc</option>
+                                <option value="Guest">Guest</option>
+                                <option value="Full-time">Full-time</option>
+                               
+                            </select>
+                            {{mode_of_recruitment}}
+                        </div> 
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Date Of Retirement</label>
+                            <input type="text" class="form-control" name="dob_retirement" placeholder="Date of Retirement" disabled value="{{dob_retirement}}">
+                        </div>  
+                    </div>
+                </div>    
+            </div>
+    </div>
+    {% endif %}
+
+{% endblock %}

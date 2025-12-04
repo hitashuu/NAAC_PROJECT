@@ -1,0 +1,170 @@
+
+{% extends 'website/layout.html' %}
+
+{% block body %}
+
+
+
+<div class="container-fluid">
+    <h2>Personal Data</h2>
+    <form class="form-inline my-2 my-lg-0" style="float: right;" method="post" action="{% url 'personal_display'%}">
+        {% csrf_token %}
+        <label for="form-control mr-sm-2" class="form-label mr-sm-2">Filter By - </label>
+        <select class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="field">
+            <option value="" selected disabled>Select a field</option>
+            
+            <option value="father_name">Father's Name</option>
+            <option value="mother_name">Mother's Name</option>
+            <option value="spouse_name">Spouse Name</option>
+            <option value="maritial_status">Maritial Status</option>
+           
+            <option value="date_of_birth">Date Of Birth</option>
+            <option value="gender">Gender</option>
+            <option value="blood_group">Blood Group</option>
+            <option value="gpf_ornps">GPF/NPS no.</option>
+
+        </select>
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+    {% comment %} <p>List of all the Awarded Candidates.</p>                                                                                       {% endcomment %}
+    <div class="table-responsive">    
+        {% if filter_field %}
+        {% if message %}
+            <p>No Records Available</p>
+            <a href="{% url 'personal_display'%}">Back to all Records</a>
+        {% else %} 
+        <h4>Filtered</h4>  
+        <div style="padding:2%;float: right;">
+            <a class="btn btn-outline-success" href="{% url 'personal_display'%}">Remove Filter</a>
+        </div>
+
+
+
+        <p>Showing filtered results for <b>{{filter_field}}</b> matching with <b>{{filter_data}}</b></p>  
+        
+        
+        <table class="table table-hover" style="margin-top: 2%;">
+            <thead>
+                <tr>
+                    <tr>
+                        <th>Sr.No</th>
+                        {% if is_admin or is_head %}
+                        <th>Employee name</th>
+                        {% endif %}
+                        
+                        <th>Father's Name</th>
+                        <th>Mother's Name</th>
+                        <th>Maritial Status</th>
+                        <th>Spouse Name</th>
+                        <th>Date Of Birth</th>
+                        <th>Gender</th>
+                        <th>Blood Group</th>
+                        
+                        <th>GPF/NPS no.</th>
+
+                        
+                    </tr>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for i,personal  in filter_personal_list%}
+
+                    {% comment %} {% for i,award in filter_awards_list|default:awards_list %} {% endcomment %}
+                    <tr>
+                        <td>{{i}}</td>
+
+                        {% if is_admin or is_head %}
+                        <td>{{ personal.user.employee_name }}</td>
+                        {% endif %}
+                        
+                        <td>{{personal.father_name}}</td>
+                        <td>{{personal.mother_name}}</td>
+                        <td>{{personal.maritial_status}}</td>
+                        <td>{{personal.spouse_name}}</td>
+                        
+                        <td>{{personal.date_of_birth}}</td>
+                        <td>{{personal.gender}}</td>
+                        <td>{{personal.blood_group}}</td>
+                        <td>{{personal.gpf_ornps}}</td>
+                       
+                    </tr>
+                    {% endfor %}
+                </tbody>
+        </table>
+
+        {% if is_head or is_admin %}
+              <form action="{% url 'personal_data_download'%}"> 
+            <button href="#" type="submit" name="filter_personal" class="btn btn-outline-success">Download Csv</button>
+         </form>
+         {% endif %}
+   
+       {% endif %}
+       {% else %}
+        
+        <table class="table table-hover" style="margin-top: 2%;">
+            <thead>
+                <tr>
+                    <tr>
+                        <th>Sr.No</th>
+                        {% if is_admin or is_head %}
+                        <th>Employee name</th>
+                        {% endif %}
+                        
+                        <th>Father's Name</th>
+                        <th>Mother's Name</th>
+                        <th>Maritial Status</th>
+                        <th>Spouse Name</th>
+                        <th>Date Of Birth</th>
+                        <th>Gender</th>
+                        <th>Blood Group</th>
+                        
+                        <th>GPF/NPS no.</th>
+
+                        
+                    </tr>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for i,personal  in personal_list%}
+
+                    {% comment %} {% for i,award in filter_awards_list|default:awards_list %} {% endcomment %}
+                    <tr>
+                        <td>{{i}}</td>
+
+                        {% if is_admin or is_head %}
+                        <td>{{ personal.user.employee_name }}</td>
+                        {% endif %}
+                        
+                        <td>{{personal.father_name}}</td>
+                        <td>{{personal.mother_name}}</td>
+                        <td>{{personal.maritial_status}}</td>
+                        <td>{{personal.spouse_name}}</td>
+                        
+                        <td>{{personal.date_of_birth}}</td>
+                        <td>{{personal.gender}}</td>
+                        <td>{{personal.blood_group}}</td>
+                        <td>{{personal.gpf_ornps}}</td>
+                       
+                    </tr>
+                    {% endfor %}
+                </tbody>
+        </table>
+            {% comment %} {% if current_user.employee_code == 'admin' %}
+            <form action="{% url 'award_download'%}">
+                <button type="submit" name="award" class="btn btn-outline-success">Download Csv</button>
+            </form>
+            {% endif %} {% endcomment %}
+
+            {% endif %}
+
+              {% if is_head or is_admin %}
+        <form action="{% url 'personal_data_download'%}"> 
+            <button href="#" type="submit" name="personal" class="btn btn-outline-success">Download Csv</button>
+         </form>
+         {% endif %}
+    
+    </div>
+</div>
+
+{% endblock%}

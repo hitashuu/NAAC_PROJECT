@@ -1,0 +1,397 @@
+{% extends 'website/layout.html' %}
+
+{% block body %}
+<style>
+    .form_div{
+            padding: 10px 10px;
+            box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+        }
+    
+</style>
+
+
+
+    <div class="form_div">
+        {% if edit_phd %}
+        <form action="{% url 'edit_phd' edit_phd.id %}" method="post">
+            {% csrf_token%}
+        <h1> Edit Patent Published/Awarded</h1>
+        <hr>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="details">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Scholor Name</label>
+                        <input type="text" class="form-control"  name="scholor_name" placeholder="Enter the Scholor Name" value="{{edit_phd.scholor_name}}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Name of supervisor</label>
+                        <input type="text" class="form-control"  name="supervisor_name" placeholder="Enter the Supervisor Name">
+                        {{edit_phd.supervisor_name}}
+                        
+                        
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Name of co-supervisor</label>
+                        <input type="text" class="form-control"  name="co_supervisor_name" placeholder="Enter the Co-Supervisor Name">
+                        {{edit_phd.co_supervisor_name}}
+                    </div>
+
+
+                      <div class="form-group">
+                                <label for="exampleInputEmail1">Department name</label>
+                                <select name="dept" id="" class="form-control">
+                                     <option value="">Select Department
+                                        
+                                     </option>
+                                    <option value="Department Of Dance">Department Of Dance</option>
+                                    <option value="Department Of Gurmat Sangeet">Department Of Gurmat Sangeet</option>
+                                    <option value="Department Of Gurmat Gyan Online Study Centre">Department Of Gurmat Gyan Online Study Centre</option>
+                                    <option value="Department Of Music">Department Of Music</option>
+                                    <option value="Department Of Theatre And Television">Department Of Theatre And Television</option>
+                                    <option value="S. Sobha Singh Department Of Fine Arts">S. Sobha Singh Department Of Fine Arts</option>
+                                    <option value="Department Of English">Department Of English</option>
+                                    <option value="Department Of Foreign Languages">Department Of Foreign Languages</option>
+                                    <option value="Department Of Hindi">Department Of Hindi</option>
+                                    <option value="Department Of Linguistics And Punjabi Lexicography">Department Of Linguistics And Punjabi Lexicography</option>
+                                    <option value="Department Of Persian, Urdu And Arabic">Department Of Persian, Urdu And Arabic</option>
+                                    <option value="Department Of Punjabi">Department Of Punjabi</option>
+                                    <option value="Department Of Sanskrit And Pali">Department Of Sanskrit And Pali</option>
+                                    <option value="Department Of Defence And Strategic Studies">Department Of Defence And Strategic Studies</option>
+                                    <option value="Department Of Economics">Department Of Economics</option>
+                                    <option value="Department Of History and Punjab Historical Studies">Department Of History and Punjab Historical Studies</option>
+                                    <option value="Department Of Philosophy">Department Of Philosophy</option>
+                                    <option value="Department Of Political Science">Department Of Political Science</option>
+                                    <option value="Department Of Psychology">Department Of Psychology</option>
+                                    <option value="Department Of Public Administration">Department Of Public Administration</option>
+                                    <option value="Department Of Religious Studies">Department Of Religious Studies</option>
+                                    <option value="Department Of Social Work">Department Of Social Work</option>
+                                    <option value="Department Of Sociology And Social Anthropology">Department Of Sociology And Social Anthropology</option>
+                                    <option value="Women's Studies Centre">Women's Studies Centre</option>
+                                    <option value="School Of Social Sciences">School Of Social Sciences</option>
+                                    <option value="Department Of Commerce">Department Of Commerce</option>
+                                    <option value="Department Of Tourism, Hospitality And Hotel Management">Department Of Tourism, Hospitality And Hotel Management</option>
+                                    <option value="School Of Management Studies">School Of Management Studies</option>
+                                    <option value="University School Of Applied Management">University School Of Applied Management</option>
+                                    <option value="University School of Buisness Studies, Guru Kashi Campus, Talwandi Sabo">University School of Buisness Studies, Guru Kashi Campus, Talwandi Sabo</option>
+                                    <option value="Department Of Law, Punjabi University, Patiala">Department Of Law, Punjabi University, Patiala</option>
+                                    <option value="Punjab School Of Law">Punjab School Of Law</option>
+                                    <option value="Centre for Census Studies and Research">Centre for Census Studies and Research</option>
+                                    <option value="Baba Farid Centre for Sufi Studies">Baba Farid Centre for Sufi Studies</option>
+                                    <option value="Centre for Diaspora Studies">Centre for Diaspora Studies</option>
+                                    <option value="Centre for Development Economics and Innovation Studies (CDEIS)">Centre for Development Economics and Innovation Studies (CDEIS)</option>
+                                    <option value="Department Of Sri Guru Granth Sahib Studies">Department Of Sri Guru Granth Sahib Studies</option>
+                                    <option value="Department of Punjabi Development Language">Department of Punjabi Development Language</option>
+                                    <option value="Institute of Advanced Studies in Comparative Religion Dr. Balbir Singh Kendra, Dehradun">Institute of Advanced Studies in Comparative Religion Dr. Balbir Singh Kendra, Dehradun</option>
+                                    <option value="Punjabi Literary Studies">Punjabi Literary Studies</option>
+                                    <option value="Research Centre for Technical Development of Punjabi Language, Literature and Culture">Research Centre for Technical Development of Punjabi Language, Literature and Culture</option>
+                                    <option value="Prof. Harbans Singh Encylopaedia of Sikhism">Prof. Harbans Singh Encylopaedia of Sikhism</option>
+                                    <option value="Department Of Computer Science">Department Of Computer Science</option>
+                                    <option value="Department Of Biotechnology & Food Technology">Department Of Biotechnology & Food Technology</option>
+                                    <option value="Department Of Botany">Department Of Botany</option>
+                                    <option value="Department Of Human Genetics">Department Of Human Genetics</option>
+                                    <option value="Department Of Zoology And Environmental Sciences">Department Of Zoology And Environmental Sciences</option>
+                                    <option value="Bhagwan Parshuram Chair For Indian Culture and Literature">Bhagwan Parshuram Chair For Indian Culture and Literature</option>
+                                    <option value="Bhai Gurdass Chair">Bhai Gurdass Chair</option>
+                                    <option value="Bhai Vir Singh Chair">Bhai Vir Singh Chair</option>
+                                    <option value="Gurmat Sangeet Chair">Gurmat Sangeet Chair</option>
+                                    <option value="Maharishi Valmiki Chair">Maharishi Valmiki Chair</option>
+                                    <option value="Maharaja Agrasen Chair">Maharaja Agrasen Chair</option>
+                                    <option value="Maharana Pratap Chair">Maharana Pratap Chair</option>
+                                    <option value="Shahid Kartar Singh Sarabha Chair">Shahid Kartar Singh Sarabha Chair</option>
+                                    <option value="Sri Guru Tegh Bahadur National Integration Chair">Sri Guru Tegh Bahadur National Integration Chair</option>
+                                    <option value="Shahid Udham Singh Chair">Shahid Udham Singh Chair</option>
+                                    <option value="Guru Gobind Singh Chair">Guru Gobind Singh Chair</option>
+                                    <option value="Guru Ravidass Chair">Guru Ravidass Chair</option>
+                                    <option value="Prof. Gurdial Singh Chair">Prof. Gurdial Singh Chair</option>
+                                    <option value="Centre For Advanced Media Studies">Centre For Advanced Media Studies</option>
+                                    <option value="Department Of Education And Community Service">Department Of Education And Community Service</option>
+                                    <option value="Department Of Journalism And Mass Communication">Department Of Journalism And Mass Communication</option>
+                                    <option value="Department Of Library And Information Science">Department Of Library And Information Science</option>
+                                    <option value="Department Of Physical Education">Department Of Physical Education</option>
+                                    <option value="Department Of Civil Engineering">Department Of Civil Engineering</option>
+                                    <option value="Department Of Computer Science and Engineering">Department Of Computer Science and Engineering</option>
+                                    <option value="Department Of Electronics & Communication Engineering">Department Of Electronics & Communication Engineering</option>
+                                    <option value="Department Of Mechanical Engineering">Department Of Mechanical Engineering</option>
+                                    <option value="Yadavindra Department of Engineering, Talwandi Sabo">Yadavindra Department of Engineering, Talwandi Sabo</option>
+                                    <option value="Department Of Pharmaceutical Sciences And Drug Research">Department Of Pharmaceutical Sciences And Drug Research</option>
+                                    <option value="Department Of Physiotherapy">Department Of Physiotherapy</option>
+                                    <option value="Department Of Sports Science">Department Of Sports Science</option>
+                                    <option value="Department Of Chemistry">Department Of Chemistry</option>
+                                    <option value="Department Of Forensic Science">Department Of Forensic Science</option>
+                                    <option value="Department Of Geography">Department Of Geography</option>
+                                    <option value="Department Of Mathematics">Department Of Mathematics</option>
+                                    <option value="Department Of Physics">Department Of Physics</option>
+                                    <option value="Department Of Statistics">Department Of Statistics</option>
+                                    <option value="Biological Sciences">Biological Sciences</option>
+                                    <option value="Languages">Languages</option>
+                                    <option value="Mathematical and Computational Sciences">Mathematical and Computational Sciences</option>
+                                    <option value="Physical and Chemical Sciences">Physical and Chemical Sciences</option>
+                                    <option value="Performing and Visual Arts">Performing and Visual Arts</option>
+                                    <option value="Social Sciences">Social Sciences</option>
+                                    <option value="Centre For Restoration Of Ecosystem Of Punjab (CRESP)">Centre For Restoration Of Ecosystem Of Punjab (CRESP)</option>
+                                    <option value="IAS Training Centre">IAS Training Centre</option>
+                                    <option value="UGC - Malaviya Mission Teacher Training Centre">UGC - Malaviya Mission Teacher Training Centre</option>
+                                    <option value="Unnat Bharat Abhiyan">Unnat Bharat Abhiyan</option>
+                                   
+                                </select>
+                                {{edit_phd.department}}
+                            </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Faculty title</label>
+
+                        <select type="text" class="form-control"  name="faculty_title">
+
+                            <option value="">--Select--</option>
+                            <option value="Faculty of technology">Faculty of technology</option>
+                            
+                        </select>
+                        {{edit_phd.faculty_title}}
+                    </div>
+
+                   
+
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="details">
+                    <div class="details">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Title</label>
+                            <textarea type="text" class="form-control" name="thesis_title" placeholder="Enter the Title of the Patent" rows="2">{{edit_phd.thesis_title}}</textarea>
+                        </div>
+                    </div>
+                    {% comment %} <div class="form-group">
+                        <label for="exampleInputEmail1">Name of the guide/s</label>
+                        <textarea type="text" class="form-control" required name="guide_names" placeholder="Enter the Title of the Patent" rows="4">{{edit_phd.guide_names}}</textarea>
+                        <small style="color: red;">* Enter Names of the guided in comma seperated manner</small>
+                    </div> {% endcomment %}
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Date of Enrollment</label>
+                        <input type="date" class="form-control"  name="enrollment_date">
+                        {{edit_phd.enrollment_date}}
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Date of Registration of Scholor</label>
+                        <input type="date" class="form-control"  name="registration_date">
+                        {{edit_phd.registration_date}}
+                    </div>
+                   
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Date of thesis submission</label>
+                        <input type="date" class="form-control"  name="thesis_submit_date">
+                        {{edit_phd.thesis_submission_date}}
+                    </div>
+                    
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Date of thesis awarded</label>
+                        <input type="date" class="form-control"  name="award_date">
+                        {{edit_phd.thesis_awarded_date}}
+                    </div>
+                   
+
+
+                   
+
+                </div>
+            </div>    
+        </div>
+            <div class="submit_button"  style="margin-top: 3%;padding: 3%;">
+                <center><button type="submit" class="btn btn-primary">Submit</button></center>
+            </div>
+        </form>
+        
+        {% else %}
+            <form action="{% url 'phd_awarded'%}" method="post">
+                {% csrf_token%}
+            <h1>Ph.D's Awarded</h1>
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="details">
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Scholor Name</label>
+                            <input type="text" class="form-control" required name="scholor_name" placeholder="Enter the Scholor Name">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Name of supervisor</label>
+                            <input type="text" class="form-control" required name="supervisor_name" placeholder="Enter the Supervisor Name">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Name of co-supervisor</label>
+                            <input type="text" class="form-control" required name="co_supervisor_name" placeholder="Enter the Co-Supervisor Name">
+                        </div>
+
+
+                          <div class="form-group">
+                                <label for="exampleInputEmail1">Department name</label>
+                                <select name="dept" id="" class="form-control">
+                                     <option value="">Select Department
+                                        
+                                     </option>
+                                    <option value="Department Of Dance">Department Of Dance</option>
+                                    <option value="Department Of Gurmat Sangeet">Department Of Gurmat Sangeet</option>
+                                    <option value="Department Of Gurmat Gyan Online Study Centre">Department Of Gurmat Gyan Online Study Centre</option>
+                                    <option value="Department Of Music">Department Of Music</option>
+                                    <option value="Department Of Theatre And Television">Department Of Theatre And Television</option>
+                                    <option value="S. Sobha Singh Department Of Fine Arts">S. Sobha Singh Department Of Fine Arts</option>
+                                    <option value="Department Of English">Department Of English</option>
+                                    <option value="Department Of Foreign Languages">Department Of Foreign Languages</option>
+                                    <option value="Department Of Hindi">Department Of Hindi</option>
+                                    <option value="Department Of Linguistics And Punjabi Lexicography">Department Of Linguistics And Punjabi Lexicography</option>
+                                    <option value="Department Of Persian, Urdu And Arabic">Department Of Persian, Urdu And Arabic</option>
+                                    <option value="Department Of Punjabi">Department Of Punjabi</option>
+                                    <option value="Department Of Sanskrit And Pali">Department Of Sanskrit And Pali</option>
+                                    <option value="Department Of Defence And Strategic Studies">Department Of Defence And Strategic Studies</option>
+                                    <option value="Department Of Economics">Department Of Economics</option>
+                                    <option value="Department Of History and Punjab Historical Studies">Department Of History and Punjab Historical Studies</option>
+                                    <option value="Department Of Philosophy">Department Of Philosophy</option>
+                                    <option value="Department Of Political Science">Department Of Political Science</option>
+                                    <option value="Department Of Psychology">Department Of Psychology</option>
+                                    <option value="Department Of Public Administration">Department Of Public Administration</option>
+                                    <option value="Department Of Religious Studies">Department Of Religious Studies</option>
+                                    <option value="Department Of Social Work">Department Of Social Work</option>
+                                    <option value="Department Of Sociology And Social Anthropology">Department Of Sociology And Social Anthropology</option>
+                                    <option value="Women's Studies Centre">Women's Studies Centre</option>
+                                    <option value="School Of Social Sciences">School Of Social Sciences</option>
+                                    <option value="Department Of Commerce">Department Of Commerce</option>
+                                    <option value="Department Of Tourism, Hospitality And Hotel Management">Department Of Tourism, Hospitality And Hotel Management</option>
+                                    <option value="School Of Management Studies">School Of Management Studies</option>
+                                    <option value="University School Of Applied Management">University School Of Applied Management</option>
+                                    <option value="University School of Buisness Studies, Guru Kashi Campus, Talwandi Sabo">University School of Buisness Studies, Guru Kashi Campus, Talwandi Sabo</option>
+                                    <option value="Department Of Law, Punjabi University, Patiala">Department Of Law, Punjabi University, Patiala</option>
+                                    <option value="Punjab School Of Law">Punjab School Of Law</option>
+                                    <option value="Centre for Census Studies and Research">Centre for Census Studies and Research</option>
+                                    <option value="Baba Farid Centre for Sufi Studies">Baba Farid Centre for Sufi Studies</option>
+                                    <option value="Centre for Diaspora Studies">Centre for Diaspora Studies</option>
+                                    <option value="Centre for Development Economics and Innovation Studies (CDEIS)">Centre for Development Economics and Innovation Studies (CDEIS)</option>
+                                    <option value="Department Of Sri Guru Granth Sahib Studies">Department Of Sri Guru Granth Sahib Studies</option>
+                                    <option value="Department of Punjabi Development Language">Department of Punjabi Development Language</option>
+                                    <option value="Institute of Advanced Studies in Comparative Religion Dr. Balbir Singh Kendra, Dehradun">Institute of Advanced Studies in Comparative Religion Dr. Balbir Singh Kendra, Dehradun</option>
+                                    <option value="Punjabi Literary Studies">Punjabi Literary Studies</option>
+                                    <option value="Research Centre for Technical Development of Punjabi Language, Literature and Culture">Research Centre for Technical Development of Punjabi Language, Literature and Culture</option>
+                                    <option value="Prof. Harbans Singh Encylopaedia of Sikhism">Prof. Harbans Singh Encylopaedia of Sikhism</option>
+                                    <option value="Department Of Computer Science">Department Of Computer Science</option>
+                                    <option value="Department Of Biotechnology & Food Technology">Department Of Biotechnology & Food Technology</option>
+                                    <option value="Department Of Botany">Department Of Botany</option>
+                                    <option value="Department Of Human Genetics">Department Of Human Genetics</option>
+                                    <option value="Department Of Zoology And Environmental Sciences">Department Of Zoology And Environmental Sciences</option>
+                                    <option value="Bhagwan Parshuram Chair For Indian Culture and Literature">Bhagwan Parshuram Chair For Indian Culture and Literature</option>
+                                    <option value="Bhai Gurdass Chair">Bhai Gurdass Chair</option>
+                                    <option value="Bhai Vir Singh Chair">Bhai Vir Singh Chair</option>
+                                    <option value="Gurmat Sangeet Chair">Gurmat Sangeet Chair</option>
+                                    <option value="Maharishi Valmiki Chair">Maharishi Valmiki Chair</option>
+                                    <option value="Maharaja Agrasen Chair">Maharaja Agrasen Chair</option>
+                                    <option value="Maharana Pratap Chair">Maharana Pratap Chair</option>
+                                    <option value="Shahid Kartar Singh Sarabha Chair">Shahid Kartar Singh Sarabha Chair</option>
+                                    <option value="Sri Guru Tegh Bahadur National Integration Chair">Sri Guru Tegh Bahadur National Integration Chair</option>
+                                    <option value="Shahid Udham Singh Chair">Shahid Udham Singh Chair</option>
+                                    <option value="Guru Gobind Singh Chair">Guru Gobind Singh Chair</option>
+                                    <option value="Guru Ravidass Chair">Guru Ravidass Chair</option>
+                                    <option value="Prof. Gurdial Singh Chair">Prof. Gurdial Singh Chair</option>
+                                    <option value="Centre For Advanced Media Studies">Centre For Advanced Media Studies</option>
+                                    <option value="Department Of Education And Community Service">Department Of Education And Community Service</option>
+                                    <option value="Department Of Journalism And Mass Communication">Department Of Journalism And Mass Communication</option>
+                                    <option value="Department Of Library And Information Science">Department Of Library And Information Science</option>
+                                    <option value="Department Of Physical Education">Department Of Physical Education</option>
+                                    <option value="Department Of Civil Engineering">Department Of Civil Engineering</option>
+                                    <option value="Department Of Computer Science and Engineering">Department Of Computer Science and Engineering</option>
+                                    <option value="Department Of Electronics & Communication Engineering">Department Of Electronics & Communication Engineering</option>
+                                    <option value="Department Of Mechanical Engineering">Department Of Mechanical Engineering</option>
+                                    <option value="Yadavindra Department of Engineering, Talwandi Sabo">Yadavindra Department of Engineering, Talwandi Sabo</option>
+                                    <option value="Department Of Pharmaceutical Sciences And Drug Research">Department Of Pharmaceutical Sciences And Drug Research</option>
+                                    <option value="Department Of Physiotherapy">Department Of Physiotherapy</option>
+                                    <option value="Department Of Sports Science">Department Of Sports Science</option>
+                                    <option value="Department Of Chemistry">Department Of Chemistry</option>
+                                    <option value="Department Of Forensic Science">Department Of Forensic Science</option>
+                                    <option value="Department Of Geography">Department Of Geography</option>
+                                    <option value="Department Of Mathematics">Department Of Mathematics</option>
+                                    <option value="Department Of Physics">Department Of Physics</option>
+                                    <option value="Department Of Statistics">Department Of Statistics</option>
+                                    <option value="Biological Sciences">Biological Sciences</option>
+                                    <option value="Languages">Languages</option>
+                                    <option value="Mathematical and Computational Sciences">Mathematical and Computational Sciences</option>
+                                    <option value="Physical and Chemical Sciences">Physical and Chemical Sciences</option>
+                                    <option value="Performing and Visual Arts">Performing and Visual Arts</option>
+                                    <option value="Social Sciences">Social Sciences</option>
+                                    <option value="Centre For Restoration Of Ecosystem Of Punjab (CRESP)">Centre For Restoration Of Ecosystem Of Punjab (CRESP)</option>
+                                    <option value="IAS Training Centre">IAS Training Centre</option>
+                                    <option value="UGC - Malaviya Mission Teacher Training Centre">UGC - Malaviya Mission Teacher Training Centre</option>
+                                    <option value="Unnat Bharat Abhiyan">Unnat Bharat Abhiyan</option>
+                                   
+                                </select>
+                            </div>
+
+                        
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Faculty title</label>
+                        <select type="text" class="form-control" required name="faculty_title" >
+                            <option value="">--Select--</option>
+                            <option value="Faculty of technology">Faculty of technology</option>
+                            
+                        </select>
+                        
+                    </div>
+                        
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="details">
+                        <div class="details">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Title</label>
+                                <textarea type="text" class="form-control" required name="thesis_title" placeholder="Enter the Title of the Patent" rows="2"></textarea>
+                            </div>
+                        </div>
+                        {% comment %} <div class="form-group">
+                            <label for="exampleInputEmail1">Name of the guide/s</label>
+                            <textarea type="text" class="form-control" required name="guide_names" placeholder="Enter the Title of the Patent" rows="4"></textarea>
+                            <small style="color: red;">* Enter Names of the guided in comma seperated manner</small>
+                        </div> {% endcomment %}
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Date of Enrollment</label>
+                            <input type="date" class="form-control" required name="enrollment_date">
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Date of Registration of Scholor</label>
+                            <input type="date" class="form-control" required name="registration_date">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Date of thesis submission</label>
+                            <input type="date" class="form-control" required name="thesis_submit_date">
+                        </div>
+                       
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Date of thesis awarded</label>
+                            <input type="date" class="form-control" required name="award_date">
+                        </div>
+                       
+
+                        
+
+                        
+                    </div>
+                </div>    
+            </div>
+                <div class="submit_button"  style="margin-top: 3%;padding: 3%;">
+                    <center><button type="submit" class="btn btn-primary">Submit</button></center>
+                </div>
+            </form>
+    </div>
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,146 @@
+{% extends 'website/layout.html' %}
+
+{% block body %}
+
+<script>
+    function DeleteAlert() {
+      var myText = "Are you sure you want to Delete this item";
+      alert (myText);
+    }
+    </script>
+
+<div class="container-fluid">
+    <h2>Awards</h2>
+    <form class="form-inline my-2 my-lg-0" style="float: right;" method="post" action="{% url 'award_display'%}">
+        {% csrf_token %}
+        <label for="form-control mr-sm-2" class="form-label mr-sm-2">Filter By - </label>
+        <select class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="field">
+            <option value="" selected disabled>Select a field</option>
+            
+            <option value="activity">Activity</option>
+            <option value="award_name">Award Name</option>
+            <option value="authority_name">Authority</option>
+           
+            <option value="level">Level</option>
+            <option value="awardee">Name of the awardee</option>
+
+        </select>
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+
+    <p>List of all the Awarded Candidates.</p>                                                                                      
+    <div class="table-responsive">    
+        {% if filter_field %}
+        {% if message %}
+            <p>No Records Available</p>
+            <a href="{% url 'research_display'%}">Back to all Records</a>
+        {% else %} 
+        <h4>Filtered</h4>  
+        <div style="padding:2%;float: right;">
+            <a class="btn btn-outline-success" href="{% url 'award_display'%}">Remove Filter</a>
+        </div>
+       
+       
+        <p>Showing filtered results for <b>{{filter_field}}</b> matching with <b>{{filter_data}}</b></p>
+        
+        
+        <table class="table table-hover" style="margin-top: 2%;">
+            <thead>
+                <tr>
+                    <th>Sr.No</th>
+                    {% if is_admin or is_head %}
+                        <th>Registered BY Employee Name</th>
+                    {% endif %}
+                    
+                    <th>Activity</th>
+                    <th>Award Name</th>
+                    <th>Authority Name</th>
+                    <th>Award Date</th>
+                    <th>Level</th>
+                    <th>Name of the awardee</th>
+                    {% if not is_admin and not is_head %}
+                        <th>Edit or Delete</th>
+                    {% endif %}
+                </tr>
+                </thead>
+                <tbody>
+                    {% for i,award in filter_awards_list %}
+                  
+                        <tr>
+                            <td>{{i}}</td>
+                            {% if is_admin or is_head %}
+                                <td>{{award.user.employee_name}}</td>
+                            {% endif %}
+                            
+                            <td>{{award.activity}}</td>
+                            <td>{{award.award_name}}</td>
+                            <td>{{award.authority_name}}</td>
+                            <td>{{award.date_award}}</td>
+                            <td>{{award.level}}</td>
+                            <td>{{award.awardee}}</td>
+                           {% if not is_admin and not is_head %}
+                                <td><a href="{% url 'edit_award' award.id %}">Edit</a>/<a href="{% url 'delete_award' award.id %}" onclick="DeleteAlert()">Delete</a></td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+        </table>
+         
+            <form action="{% url 'award_download'%}">
+                <button type="submit" name="award" class="btn btn-outline-success">Download Csv</button>
+            </form>
+            {% endif %}
+
+            {% else %}
+  
+        <table class="table table-hover" style="margin-top: 2%;">
+            <thead>
+                <tr>
+                    <th>Sr.No</th>
+                    {% if is_admin or is_head %}
+                        <th>Registered BY Employee Name</th>
+                    {% endif %}
+                    
+                    <th>Activity</th>
+                    <th>Award Name</th>
+                    <th>Authority Name</th>
+                    <th>Award Date</th>
+                    <th>Level</th>
+                    <th>Name of the awardee</th>
+                   {% if not is_admin and not is_head %}
+                        <th>Edit or Delete</th>
+                    {% endif %}
+                </tr>
+                </thead>
+                <tbody>
+                    {% for i,award in awards_list %}
+                  
+                        <tr>
+                            <td>{{i}}</td>
+                            {% if is_admin or is_head %}
+                                <td>{{award.user.employee_name}}</td>
+                            {% endif %}
+                            
+                            <td>{{award.activity}}</td>
+                            <td>{{award.award_name}}</td>
+                            <td>{{award.authority_name}}</td>
+                            <td>{{award.date_award}}</td>
+                            <td>{{award.level}}</td>
+                            <td>{{award.awardee}}</td>
+                            {% if not is_admin and not is_head %}
+                                <td><a href="{% url 'edit_award' award.id %}">Edit</a>/<a href="{% url 'delete_award' award.id %}" onclick="DeleteAlert()">Delete</a></td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+        </table>
+         
+            <form action="{% url 'award_download'%}">
+                <button type="submit" name="award" class="btn btn-outline-success">Download Csv</button>
+            </form>
+        {%endif %}   
+    
+    </div>
+</div>
+{% endblock %}
