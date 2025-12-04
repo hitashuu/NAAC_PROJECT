@@ -88,20 +88,45 @@ WSGI_APPLICATION = 'GauravSir.wsgi.application'
 # }
 
 
-DATABASES={
-    'default':dj_database_url.parse(config('DATABASE_URL'))
-}
+# DATABASES={
+#     'default':dj_database_url.parse(config('DATABASE_URL'))
+# }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'gauravsir',
-        'USER':'postgres',
-        'PASSWORD':'user',
-        'HOST':'localhost',
-        'PORT':'5432',
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'gauravsir',
+#         'USER':'postgres',
+#         'PASSWORD':'user',
+#         'HOST':'localhost',
+#         'PORT':'5432',
+#     }
+# }
+
+# import dj_database_url
+# from decouple import config
+# import os
+
+# Default DB for production (Render)
+DATABASE_URL = config("DATABASE_URL", default=None)
+
+if DATABASE_URL:
+    DATABASES = {
+        "default": dj_database_url.parse(DATABASE_URL)
     }
-}
+else:
+    # Local development database
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": "gauravsir",
+            "USER": "postgres",
+            "PASSWORD": "user",
+            "HOST": "localhost",
+            "PORT": "5432",
+        }
+    }
+
 
 
 # Password validation
